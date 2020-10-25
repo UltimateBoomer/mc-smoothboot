@@ -4,21 +4,25 @@
   "version": "${version}",
 
   "name": "Lagless Boot",
-  "description": "Reduce threads used during Minecraft initialization so it doesn't freeze other applications.\nProbably most effective for computers with 8 thread CPUs.",
+  "description": "Make Minecraft not slow down your entire computer when loading up.",
   "authors": [
     "UltimateBoomer"
   ],
   "contact": {
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/UltimateBoomer",
+    "sources": "https://github.com/UltimateBoomer/laglessboot-fabric"
   },
 
-  "license": "GNU General Public License",
+  "license": "MIT License",
   "icon": "assets/laglessboot/icon.png",
 
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
-    "main": [
+    "client": [
       "com.ultimateboomer.laglessboot.LaglessBoot"
+    ],
+    "modmenu": [
+      "com.ultimateboomer.laglessboot.config.LaglessBootModMenu"
     ]
   },
   "mixins": [
