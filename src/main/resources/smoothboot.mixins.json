@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.ultimateboomer.laglessboot.mixin",
+  "package": "com.ultimateboomer.smoothboot.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],

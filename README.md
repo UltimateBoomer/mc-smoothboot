@@ -1,5 +1,5 @@
-# Lagless Boot (Fabric)
-## Make Minecraft not slow down your system whening loading into the title screen.
+# Smooth Boot (Fabric)
+## Make Minecraft not slow down the system whening loading into the title screen.
 
 If you have a PC with a lower thread count CPU (ex. 4 core 8 threads), you may have noticed that Minecraft takes up 100% of the CPU when loading into the title screen. As a result, doing anything else on the computer at the same time is next to impossible.
 This is because Minecraft will try to use all of your CPU threads to load the game, which while it speeds up the loading process it also takes up processing cycles from other programs. Note that the threads used is limited to 7 max plus the main thread by vanilla default, so if you have a higher core count CPU you probably won't notice the slowdown.

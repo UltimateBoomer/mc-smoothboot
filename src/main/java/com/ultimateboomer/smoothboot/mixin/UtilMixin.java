@@ -1,4 +1,4 @@
-package com.ultimateboomer.laglessboot.mixin;
+package com.ultimateboomer.smoothboot.mixin;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-import com.ultimateboomer.laglessboot.LaglessBoot;
+import com.ultimateboomer.smoothboot.SmoothBoot;
 
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
@@ -62,12 +62,12 @@ public abstract class UtilMixin {
 	// Replace createWorker
 	private static ExecutorService replWorker(String name) {
 		if (!initConfig) {
-			LaglessBoot.regConfig();
+			SmoothBoot.regConfig();
 			initConfig = true;
 		}
 		
-		LaglessBoot.LOGGER.info("Initialized " + name);
-		Object executorService2 = new ForkJoinPool(MathHelper.clamp(LaglessBoot.config.threadCount, 1, 0x7fff), (forkJoinPool) -> {
+		SmoothBoot.LOGGER.info("Initialized " + name);
+		Object executorService2 = new ForkJoinPool(MathHelper.clamp(SmoothBoot.config.threadCount, 1, 0x7fff), (forkJoinPool) -> {
 			ForkJoinWorkerThread forkJoinWorkerThread = new ForkJoinWorkerThread(forkJoinPool) {
 				protected void onTermination(Throwable throwable) {
 					if (throwable != null) {
@@ -79,7 +79,7 @@ public abstract class UtilMixin {
 					super.onTermination(throwable);
 				}
 			};
-			forkJoinWorkerThread.setPriority(LaglessBoot.config.priority);
+			forkJoinWorkerThread.setPriority(SmoothBoot.config.priority);
 			forkJoinWorkerThread.setName("Worker-" + name + "-" + NEXT_WORKER_ID.getAndIncrement());
 			return forkJoinWorkerThread;
 		}, UtilMixin::method_18347, true);

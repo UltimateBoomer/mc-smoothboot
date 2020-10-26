@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "id": "laglessboot",
+  "id": "smoothboot",
   "version": "${version}",
 
-  "name": "Lagless Boot",
-  "description": "Make Minecraft not slow down your entire computer when loading up.",
+  "name": "Smooth Boot",
+  "description": "Prevent Minecraft from lagging your computer when loading up.",
   "authors": [
     "UltimateBoomer"
   ],
@@ -14,19 +14,19 @@
   },
 
   "license": "MIT License",
-  "icon": "assets/laglessboot/icon.png",
+  "icon": "assets/smoothboot/icon.png",
 
   "environment": "client",
   "entrypoints": {
     "client": [
-      "com.ultimateboomer.laglessboot.LaglessBoot"
+      "com.ultimateboomer.smoothboot.SmoothBoot"
     ],
     "modmenu": [
-      "com.ultimateboomer.laglessboot.config.LaglessBootModMenu"
+      "com.ultimateboomer.smoothboot.config.SmoothBootModMenu"
     ]
   },
   "mixins": [
-    "laglessboot.mixins.json"
+    "smoothboot.mixins.json"
   ],
 
   "depends": {

@@ -1,0 +1,7 @@
+{
+	"text.autoconfig.smoothboot.title": "Smooth Boot",
+	"text.autoconfig.smoothboot.option.threadCount": "Thread Count",
+	"text.autoconfig.smoothboot.option.threadCount.@Tooltip": "Affect CPU usage and load speed",
+	"text.autoconfig.smoothboot.option.priority": "Priority",
+	"text.autoconfig.smoothboot.option.priority.@Tooltip": "A lower value leaves more performance for other tasks"
+}

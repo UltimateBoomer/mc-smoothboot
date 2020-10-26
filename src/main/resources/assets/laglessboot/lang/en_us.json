@@ -1,7 +1,0 @@
-{
-	"text.autoconfig.laglessboot.title": "Lagless Boot",
-	"text.autoconfig.laglessboot.option.threadCount": "Thread Count",
-	"text.autoconfig.laglessboot.option.threadCount.@Tooltip": "Affect CPU usage and load speed",
-	"text.autoconfig.laglessboot.option.priority": "Priority",
-	"text.autoconfig.laglessboot.option.priority.@Tooltip": "A lower value leaves more performance for other tasks"
-}

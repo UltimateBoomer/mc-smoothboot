@@ -1,6 +1,6 @@
-package com.ultimateboomer.laglessboot.config;
+package com.ultimateboomer.smoothboot.config;
 
-import com.ultimateboomer.laglessboot.LaglessBoot;
+import com.ultimateboomer.smoothboot.SmoothBoot;
 
 import io.github.prospector.modmenu.api.ConfigScreenFactory;
 import io.github.prospector.modmenu.api.ModMenuApi;
@@ -9,14 +9,14 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
-public class LaglessBootModMenu implements ModMenuApi {
+public class SmoothBootModMenu implements ModMenuApi {
 	@Override
 	public String getModId() {
-		return LaglessBoot.MOD_ID;
+		return SmoothBoot.MOD_ID;
 	}
 	
 	@Override
 	public ConfigScreenFactory<?> getModConfigScreenFactory() {
-		return parent -> AutoConfig.getConfigScreen(LaglessBootConfig.class, parent).get();
+		return parent -> AutoConfig.getConfigScreen(SmoothBootConfig.class, parent).get();
 	}
 }
