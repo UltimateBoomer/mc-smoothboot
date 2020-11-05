@@ -1,7 +1,15 @@
 {
 	"text.autoconfig.smoothboot.title": "Smooth Boot",
-	"text.autoconfig.smoothboot.option.threadCount": "Thread Count",
-	"text.autoconfig.smoothboot.option.threadCount.@Tooltip": "Affect CPU usage and load speed",
-	"text.autoconfig.smoothboot.option.priority": "Priority",
-	"text.autoconfig.smoothboot.option.priority.@Tooltip": "A lower value leaves more performance for other tasks"
+	"text.autoconfig.smoothboot.option.preset": "Performance Preset",
+	"text.autoconfig.smoothboot.option.preset.@Tooltip[0]": "Lower settings leave more performance for other programs",
+	"text.autoconfig.smoothboot.option.preset.@Tooltip[1]": "Higher settings prioritize loading speed but may slow down the system",
+	"text.autoconfig.smoothboot.option.custom": "Custom Settings",
+	"text.autoconfig.smoothboot.option.custom.bootstrapThreadCount": "Bootstrap Worker Thread Count",
+	"text.autoconfig.smoothboot.option.custom.bootstrapThreadCount.@Tooltip": "Increasing is known to decrease performance",
+	"text.autoconfig.smoothboot.option.custom.mainThreadCount": "Main Worker Thread Count",
+	"text.autoconfig.smoothboot.option.custom.mainThreadCount.@Tooltip": "Load time should scale well with this setting",
+	"text.autoconfig.smoothboot.option.custom.bootstrapPriority": "Bootstrap Worker Priority",
+	"text.autoconfig.smoothboot.option.custom.bootstrapPriority.@Tooltip": "Bootstrap Worker Thread Priority",
+	"text.autoconfig.smoothboot.option.custom.mainPriority": "Main Worker Priority",
+	"text.autoconfig.smoothboot.option.custom.mainPriority.@Tooltip": "Main Worker Thread Priority"
 }

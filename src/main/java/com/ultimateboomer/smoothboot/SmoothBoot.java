@@ -20,7 +20,6 @@ public class SmoothBoot implements ClientModInitializer {
 	
 	public static SmoothBootConfig config;
 	
-	// Too late for reading config
 	@Override
 	public void onInitializeClient() {
 		

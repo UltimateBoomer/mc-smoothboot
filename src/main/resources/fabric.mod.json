@@ -4,13 +4,13 @@
   "version": "${version}",
 
   "name": "Smooth Boot",
-  "description": "Prevent Minecraft from lagging your computer when loading up.",
+  "description": "Optimize Minecraft's loading process to be smoother on low end systems and scale better on high end systems.\nThe effect may be different depending on the computer.",
   "authors": [
     "UltimateBoomer"
   ],
   "contact": {
     "homepage": "https://github.com/UltimateBoomer",
-    "sources": "https://github.com/UltimateBoomer/laglessboot-fabric"
+    "sources": "https://github.com/UltimateBoomer/smoothboot-fabric"
   },
 
   "license": "MIT License",

@@ -9,9 +9,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 import com.ultimateboomer.smoothboot.SmoothBoot;
+import com.ultimateboomer.smoothboot.config.SmoothBootConfig.SmoothBootPerformance;
 
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
@@ -41,7 +43,7 @@ public abstract class UtilMixin {
 	
 	// Probably not ideal, but this is the only way I found to modify createWorker without causing errors.
 	// Redirecting or overwriting causes static initialization to be called too early resulting in NullPointerException being thrown.
-	@org.spongepowered.asm.mixin.Overwrite()
+	@Overwrite()
 	public static Executor getBootstrapExecutor() {
 		if (!initBootstrapExecutor) {
 			BOOTSTRAP_EXECUTOR = replWorker("Bootstrap");
@@ -50,7 +52,7 @@ public abstract class UtilMixin {
 		return BOOTSTRAP_EXECUTOR;
 	}
 	
-	@org.spongepowered.asm.mixin.Overwrite()
+	@Overwrite()
 	public static Executor getMainWorkerExecutor() {
 		if (!initMainWorkerExecutor) {
 			MAIN_WORKER_EXECUTOR = replWorker("Main");
@@ -65,9 +67,10 @@ public abstract class UtilMixin {
 			SmoothBoot.regConfig();
 			initConfig = true;
 		}
-		
-		SmoothBoot.LOGGER.info("Initialized " + name);
-		Object executorService2 = new ForkJoinPool(MathHelper.clamp(SmoothBoot.config.threadCount, 1, 0x7fff), (forkJoinPool) -> {
+		SmoothBoot.LOGGER.info("Initialized " + name + " worker");
+		SmoothBootPerformance perf = SmoothBoot.config.getPerformance();
+		Object executorService2 = new ForkJoinPool(MathHelper.clamp(select(name, perf.bootstrapThreadCount, perf.mainThreadCount),
+			1, 0x7fff), (forkJoinPool) -> {
 			ForkJoinWorkerThread forkJoinWorkerThread = new ForkJoinWorkerThread(forkJoinPool) {
 				protected void onTermination(Throwable throwable) {
 					if (throwable != null) {
@@ -79,10 +82,15 @@ public abstract class UtilMixin {
 					super.onTermination(throwable);
 				}
 			};
-			forkJoinWorkerThread.setPriority(SmoothBoot.config.priority);
+			forkJoinWorkerThread.setPriority(select(name, perf.bootstrapPriority, perf.mainPriority));
 			forkJoinWorkerThread.setName("Worker-" + name + "-" + NEXT_WORKER_ID.getAndIncrement());
 			return forkJoinWorkerThread;
 		}, UtilMixin::method_18347, true);
+		SmoothBoot.LOGGER.info(executorService2);
 		return (ExecutorService) executorService2;
+	}
+	
+	private static <T> T select(String name, T bootstrap, T main) {
+		return name == "Bootstrap" ? bootstrap : main;
 	}
 }
