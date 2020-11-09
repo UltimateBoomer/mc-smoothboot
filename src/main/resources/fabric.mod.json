@@ -16,9 +16,9 @@
   "license": "MIT License",
   "icon": "assets/smoothboot/icon.png",
 
-  "environment": "client",
+  "environment": "*",
   "entrypoints": {
-    "client": [
+    "main": [
       "com.ultimateboomer.smoothboot.SmoothBoot"
     ],
     "modmenu": [

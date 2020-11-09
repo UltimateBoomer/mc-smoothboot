@@ -7,12 +7,9 @@ import com.ultimateboomer.smoothboot.config.SmoothBootConfig;
 
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.fabricmc.api.ModInitializer;
 
-@Environment(EnvType.CLIENT)
-public class SmoothBoot implements ClientModInitializer {
+public class SmoothBoot implements ModInitializer {
 	public static final String MOD_ID = "smoothboot";
 	public static final String NAME = "Smooth Boot";
 	
@@ -21,7 +18,7 @@ public class SmoothBoot implements ClientModInitializer {
 	public static SmoothBootConfig config;
 	
 	@Override
-	public void onInitializeClient() {
+	public void onInitialize() {
 		
 	}
 	

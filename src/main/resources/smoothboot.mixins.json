@@ -8,6 +8,9 @@
   "client": [
     "UtilMixin"
   ],
+  "server": [
+  	"UtilMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
