@@ -1,5 +1,6 @@
 package com.ultimateboomer.smoothboot.mixin;
 
+import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -7,6 +8,7 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinWorkerThread;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.ultimateboomer.smoothboot.LoggingForkJoinWorkerThread;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -82,31 +84,21 @@ public abstract class UtilMixin {
 			initConfig = true;
 		}
 		
-		Object executorService2 = new ForkJoinPool(MathHelper.clamp(select(name, SmoothBoot.config.bootstrapThreadCount,
+		ExecutorService executorService2 = new ForkJoinPool(MathHelper.clamp(select(name, SmoothBoot.config.bootstrapThreadCount,
 			SmoothBoot.config.mainThreadCount), 1, 0x7fff), (forkJoinPool) -> {
 				String workerName = "Worker-" + name + "-" + NEXT_WORKER_ID.getAndIncrement();
 				SmoothBoot.LOGGER.info("Initialized " + workerName);
 				
-				ForkJoinWorkerThread forkJoinWorkerThread = new ForkJoinWorkerThread(forkJoinPool) {
-					protected void onTermination(Throwable throwable) {
-						if (throwable != null) {
-							LOGGER.warn("{} died", this.getName(), throwable);
-						} else {
-							LOGGER.debug("{} shutdown", this.getName());
-						}
-						
-						super.onTermination(throwable);
-					}
-				};
+				ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, LOGGER);
 				forkJoinWorkerThread.setPriority(select(name, SmoothBoot.config.bootstrapPriority, SmoothBoot.config.mainPriority));
 				forkJoinWorkerThread.setName(workerName);
 				return forkJoinWorkerThread;
 		}, UtilMixin::method_18347, true);
 		SmoothBoot.LOGGER.info(executorService2);
-		return (ExecutorService) executorService2;
+		return executorService2;
 	}
 	
-	// Replace createIoWOrker
+	// Replace createIoWorker
 	private static ExecutorService replIoWorker() {
 		return Executors.newCachedThreadPool((runnable) -> {
 			String workerName = "IO-Worker-" + NEXT_WORKER_ID.getAndIncrement();
@@ -114,6 +106,7 @@ public abstract class UtilMixin {
 			
 			Thread thread = new Thread(runnable);
 			thread.setName(workerName);
+			thread.setDaemon(true);
 			thread.setPriority(SmoothBoot.config.ioPriority);
 			thread.setUncaughtExceptionHandler(UtilMixin::method_18347);
 			return thread;
@@ -121,6 +114,6 @@ public abstract class UtilMixin {
 	}
 	
 	private static <T> T select(String name, T bootstrap, T main) {
-		return name == "Bootstrap" ? bootstrap : main;
+		return Objects.equals(name, "Bootstrap") ? bootstrap : main;
 	}
 }
