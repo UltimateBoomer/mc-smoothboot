@@ -51,6 +51,7 @@ public abstract class UtilMixin {
 	public static Executor getBootstrapExecutor() {
 		if (!initBootstrap) {
 			BOOTSTRAP_EXECUTOR = replWorker("Bootstrap");
+			SmoothBoot.LOGGER.info("Bootstrap worker replaced");
 			initBootstrap = true;
 		}
 		return BOOTSTRAP_EXECUTOR;
@@ -60,6 +61,7 @@ public abstract class UtilMixin {
 	public static Executor getMainWorkerExecutor() {
 		if (!initMainWorker) {
 			MAIN_WORKER_EXECUTOR = replWorker("Main");
+			SmoothBoot.LOGGER.info("Main worker replaced");
 			initMainWorker = true;
 		}
 		return MAIN_WORKER_EXECUTOR;
@@ -80,25 +82,25 @@ public abstract class UtilMixin {
 			initConfig = true;
 		}
 		
-		String workerName = "Worker-" + name + "-" + NEXT_WORKER_ID.getAndIncrement();
-		SmoothBoot.LOGGER.info("Initialized Worker-" + workerName);
-		
 		Object executorService2 = new ForkJoinPool(MathHelper.clamp(select(name, SmoothBoot.config.bootstrapThreadCount,
 			SmoothBoot.config.mainThreadCount), 1, 0x7fff), (forkJoinPool) -> {
-			ForkJoinWorkerThread forkJoinWorkerThread = new ForkJoinWorkerThread(forkJoinPool) {
-				protected void onTermination(Throwable throwable) {
-					if (throwable != null) {
-						LOGGER.warn("{} died", this.getName(), throwable);
-					} else {
-						LOGGER.debug("{} shutdown", this.getName());
+				String workerName = "Worker-" + name + "-" + NEXT_WORKER_ID.getAndIncrement();
+				SmoothBoot.LOGGER.info("Initialized " + workerName);
+				
+				ForkJoinWorkerThread forkJoinWorkerThread = new ForkJoinWorkerThread(forkJoinPool) {
+					protected void onTermination(Throwable throwable) {
+						if (throwable != null) {
+							LOGGER.warn("{} died", this.getName(), throwable);
+						} else {
+							LOGGER.debug("{} shutdown", this.getName());
+						}
+						
+						super.onTermination(throwable);
 					}
-					
-					super.onTermination(throwable);
-				}
-			};
-			forkJoinWorkerThread.setPriority(select(name, SmoothBoot.config.bootstrapPriority, SmoothBoot.config.mainPriority));
-			forkJoinWorkerThread.setName(workerName);
-			return forkJoinWorkerThread;
+				};
+				forkJoinWorkerThread.setPriority(select(name, SmoothBoot.config.bootstrapPriority, SmoothBoot.config.mainPriority));
+				forkJoinWorkerThread.setName(workerName);
+				return forkJoinWorkerThread;
 		}, UtilMixin::method_18347, true);
 		SmoothBoot.LOGGER.info(executorService2);
 		return (ExecutorService) executorService2;
@@ -106,9 +108,10 @@ public abstract class UtilMixin {
 	
 	// Replace createIoWOrker
 	private static ExecutorService replIoWorker() {
-		String workerName = "IO-Worker-" + NEXT_WORKER_ID.getAndIncrement();
-		SmoothBoot.LOGGER.info("Initialized " + workerName);
 		return Executors.newCachedThreadPool((runnable) -> {
+			String workerName = "IO-Worker-" + NEXT_WORKER_ID.getAndIncrement();
+			SmoothBoot.LOGGER.info("Initialized " + workerName);
+			
 			Thread thread = new Thread(runnable);
 			thread.setName(workerName);
 			thread.setPriority(SmoothBoot.config.ioPriority);
