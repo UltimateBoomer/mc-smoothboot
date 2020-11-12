@@ -8,13 +8,13 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinWorkerThread;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.ultimateboomer.smoothboot.LoggingForkJoinWorkerThread;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
+import com.ultimateboomer.smoothboot.LoggingForkJoinWorkerThread;
 import com.ultimateboomer.smoothboot.SmoothBoot;
 
 import net.minecraft.util.Util;
@@ -53,7 +53,7 @@ public abstract class UtilMixin {
 	public static Executor getBootstrapExecutor() {
 		if (!initBootstrap) {
 			BOOTSTRAP_EXECUTOR = replWorker("Bootstrap");
-			SmoothBoot.LOGGER.info("Bootstrap worker replaced");
+			SmoothBoot.LOGGER.debug("Bootstrap worker replaced");
 			initBootstrap = true;
 		}
 		return BOOTSTRAP_EXECUTOR;
@@ -63,7 +63,7 @@ public abstract class UtilMixin {
 	public static Executor getMainWorkerExecutor() {
 		if (!initMainWorker) {
 			MAIN_WORKER_EXECUTOR = replWorker("Main");
-			SmoothBoot.LOGGER.info("Main worker replaced");
+			SmoothBoot.LOGGER.debug("Main worker replaced");
 			initMainWorker = true;
 		}
 		return MAIN_WORKER_EXECUTOR;
@@ -73,6 +73,8 @@ public abstract class UtilMixin {
 	public static Executor getIoWorkerExecutor() {
 		if (!initIOWorker) {
 			IO_WORKER_EXECUTOR = replIoWorker();
+			SmoothBoot.LOGGER.debug("IO worker replaced");
+			initIOWorker = true;
 		}
 		return IO_WORKER_EXECUTOR;
 	}
@@ -87,7 +89,7 @@ public abstract class UtilMixin {
 		ExecutorService executorService2 = new ForkJoinPool(MathHelper.clamp(select(name, SmoothBoot.config.bootstrapThreadCount,
 			SmoothBoot.config.mainThreadCount), 1, 0x7fff), (forkJoinPool) -> {
 				String workerName = "Worker-" + name + "-" + NEXT_WORKER_ID.getAndIncrement();
-				SmoothBoot.LOGGER.info("Initialized " + workerName);
+				SmoothBoot.LOGGER.debug("Initialized " + workerName);
 				
 				ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, LOGGER);
 				forkJoinWorkerThread.setPriority(select(name, SmoothBoot.config.bootstrapPriority, SmoothBoot.config.mainPriority));
@@ -102,7 +104,7 @@ public abstract class UtilMixin {
 	private static ExecutorService replIoWorker() {
 		return Executors.newCachedThreadPool((runnable) -> {
 			String workerName = "IO-Worker-" + NEXT_WORKER_ID.getAndIncrement();
-			SmoothBoot.LOGGER.info("Initialized " + workerName);
+			SmoothBoot.LOGGER.debug("Initialized " + workerName);
 			
 			Thread thread = new Thread(runnable);
 			thread.setName(workerName);
