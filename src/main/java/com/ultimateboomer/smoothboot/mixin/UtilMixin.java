@@ -52,7 +52,7 @@ public abstract class UtilMixin {
 		return SERVER_WORKER_EXECUTOR;
 	}
 	
-	// Replace createWorker
+	// Replace createServerWorkerExecutor
 	private static ExecutorService replWorker(String name) {
 		if (!initConfig) {
 			SmoothBoot.regConfig();

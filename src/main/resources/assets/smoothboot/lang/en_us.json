@@ -3,5 +3,5 @@
 	"text.autoconfig.smoothboot.option.serverThreadCount": "Server Worker Thread Count",
 	"text.autoconfig.smoothboot.option.serverThreadCount.@Tooltip": "Change # of processor threads used",
 	"text.autoconfig.smoothboot.option.serverPriority": "Server Worker Priority",
-	"text.autoconfig.smoothboot.option.serverPriority.@Tooltip": "Use Java priority settings (1-10)"
+	"text.autoconfig.smoothboot.option.serverPriority.@Tooltip": "Change Java thread priority"
 }
