@@ -31,14 +31,11 @@ public abstract class UtilMixin {
 	
 	@Shadow
 	@Final
-	private static AtomicInteger NEXT_SERVER_WORKER_ID;
+	private static AtomicInteger field_18034;
 	
 	@Shadow
 	@Final
 	private static Logger LOGGER;
-	
-	@Shadow
-	protected static <T extends Throwable> T throwOrPause(T t) { return null; };
 	
 	// Probably not ideal, but this is the only way I found to modify createWorker without causing errors.
 	// Redirecting or overwriting causes static initialization to be called too early resulting in NullPointerException being thrown.
@@ -52,7 +49,7 @@ public abstract class UtilMixin {
 		return SERVER_WORKER_EXECUTOR;
 	}
 	
-	// Replace createWorker
+	// Replace createServerWorkerExecutor
 	private static ExecutorService replWorker(String name) {
 		if (!initConfig) {
 			SmoothBoot.regConfig();
@@ -61,7 +58,7 @@ public abstract class UtilMixin {
 		
 		ExecutorService executorService2 = new ForkJoinPool(MathHelper.clamp(SmoothBoot.config.serverThreadCount,
 			1, 0x7fff), (forkJoinPool) -> {
-				String workerName = "Server-Worker-" + name + "-" + NEXT_SERVER_WORKER_ID.getAndIncrement();
+				String workerName = "Server-Worker-" + name + "-" + field_18034.getAndIncrement();
 				SmoothBoot.LOGGER.debug("Initialized " + workerName);
 				
 				ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, LOGGER);
@@ -69,7 +66,6 @@ public abstract class UtilMixin {
 				forkJoinWorkerThread.setName(workerName);
 				return forkJoinWorkerThread;
 		}, (thread, throwable) -> {
-            throwOrPause(throwable);
             if (throwable instanceof CompletionException) {
                throwable = throwable.getCause();
             }
