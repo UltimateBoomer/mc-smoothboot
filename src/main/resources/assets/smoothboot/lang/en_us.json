@@ -1,13 +1,13 @@
 {
 	"text.autoconfig.smoothboot.title": "Smooth Boot",
 	"text.autoconfig.smoothboot.option.bootstrapThreadCount": "Bootstrap Worker Thread Count",
-	"text.autoconfig.smoothboot.option.bootstrapThreadCount.@Tooltip": "Increasing is known to decrease performance",
+	"text.autoconfig.smoothboot.option.bootstrapThreadCount.@Tooltip": "Change # of processor threads used",
 	"text.autoconfig.smoothboot.option.mainThreadCount": "Main Worker Thread Count",
-	"text.autoconfig.smoothboot.option.mainThreadCount.@Tooltip": "Load time should scale with this setting",
+	"text.autoconfig.smoothboot.option.mainThreadCount.@Tooltip": "Change # of processor threads used",
 	"text.autoconfig.smoothboot.option.bootstrapPriority": "Bootstrap Worker Priority",
-	"text.autoconfig.smoothboot.option.bootstrapPriority.@Tooltip": "Use Java priority settings (1-10)",
+	"text.autoconfig.smoothboot.option.bootstrapPriority.@Tooltip": "Change Java thread priority",
 	"text.autoconfig.smoothboot.option.mainPriority": "Main Worker Priority",
-	"text.autoconfig.smoothboot.option.mainPriority.@Tooltip": "Use Java priority settings (1-10)",
+	"text.autoconfig.smoothboot.option.mainPriority.@Tooltip": "Change Java thread priority",
 	"text.autoconfig.smoothboot.option.ioPriority": "IO Worker Priority",
-	"text.autoconfig.smoothboot.option.ioPriority.@Tooltip": "Use Java priority settings (1-10)"
+	"text.autoconfig.smoothboot.option.ioPriority.@Tooltip": "Change Java thread priority"
 }
