@@ -17,7 +17,7 @@ public class ModWorkManagerMixin {
 	private static ForkJoinWorkerThread newForkJoinWorkerThread(ForkJoinPool pool) {
 		ForkJoinWorkerThread thread = ForkJoinPool.defaultForkJoinWorkerThreadFactory.newThread(pool);
 		String workerName = "modloading-worker-" + thread.getPoolIndex();
-		SmoothBoot.LOGGER.info("Initialized " + workerName);
+		SmoothBoot.LOGGER.debug("Initialized " + workerName);
 		thread.setName("modloading-worker-" + thread.getPoolIndex());
 		thread.setPriority(SmoothBootConfigHandler.config.getModLoadingPriority());
 		thread.setContextClassLoader(Thread.currentThread().getContextClassLoader());

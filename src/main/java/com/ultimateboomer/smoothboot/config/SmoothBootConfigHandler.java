@@ -16,14 +16,14 @@ public class SmoothBootConfigHandler {
 	
 	public static void readConfig() {
 		String configPath = System.getProperty("user.dir") + "\\config\\" + SmoothBoot.MOD_ID + ".json";
-		SmoothBoot.LOGGER.info("Config path: " + configPath);
+		SmoothBoot.LOGGER.debug("Config path: " + configPath);
 		
 		try (FileReader reader = new FileReader(configPath)) {
 			config = GSON.fromJson(reader, SmoothBootConfig.class);
 			if (config == null) {
 				throw new NullPointerException();
 			}
-			SmoothBoot.LOGGER.info("Config: " + config);
+			SmoothBoot.LOGGER.debug("Config: " + config);
 		} catch (NullPointerException | JsonParseException | IOException e) {
 			config = newConfig();
 			try (FileWriter writer = new FileWriter(configPath)) {
