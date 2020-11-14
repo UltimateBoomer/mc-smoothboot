@@ -9,10 +9,10 @@ import org.spongepowered.asm.mixin.Overwrite;
 import com.ultimateboomer.smoothboot.SmoothBoot;
 import com.ultimateboomer.smoothboot.config.SmoothBootConfigHandler;
 
-import net.minecraftforge.fml.ModWorkManager;
+import net.minecraftforge.fml.ModList;
 
-@Mixin(ModWorkManager.class)
-public class ModWorkManagerMixin {
+@Mixin(ModList.class)
+public class ModListMixin {
 	@Overwrite
 	private static ForkJoinWorkerThread newForkJoinWorkerThread(ForkJoinPool pool) {
 		ForkJoinWorkerThread thread = ForkJoinPool.defaultForkJoinWorkerThreadFactory.newThread(pool);

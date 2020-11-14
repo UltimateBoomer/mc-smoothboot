@@ -5,7 +5,7 @@
 	"refmap": "smoothboot.refmap.json",
 	"mixins": [
 		"UtilMixin",
-		"ModWorkManagerMixin"
+		"ModListMixin"
 	],
 	"minVersion": "0.8"
 }
