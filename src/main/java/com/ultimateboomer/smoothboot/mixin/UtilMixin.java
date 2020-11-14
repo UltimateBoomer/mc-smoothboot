@@ -13,9 +13,11 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
+import com.google.common.base.Objects;
 import com.ultimateboomer.smoothboot.SmoothBoot;
 import com.ultimateboomer.smoothboot.config.SmoothBootConfig;
 import com.ultimateboomer.smoothboot.config.SmoothBootConfigHandler;
+import com.ultimateboomer.smoothboot.util.LoggingForkJoinWorkerThread;
 
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
@@ -88,31 +90,20 @@ public abstract class UtilMixin {
 		Object executorService2 = new ForkJoinPool(MathHelper.clamp(select(name, config.getBootstrapThreads(),
 			config.getMainThreads()), 1, 0x7fff), (forkJoinPool) -> {
 			String workerName = "Worker-" + name + NEXT_SERVER_WORKER_ID.getAndIncrement();
-			SmoothBoot.LOGGER.info("Initialized " + workerName);
+			SmoothBoot.LOGGER.debug("Initialized " + workerName);
 			
-			ForkJoinWorkerThread forkJoinWorkerThread = new ForkJoinWorkerThread(forkJoinPool) {
-				protected void onTermination(Throwable throwable) {
-					if (throwable != null) {
-						LOGGER.warn("{} died", this.getName(), throwable);
-					} else {
-						LOGGER.debug("{} shutdown", this.getName());
-					}
-
-					super.onTermination(throwable);
-				}
-			};
+			ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, LOGGER);
 			forkJoinWorkerThread.setPriority(select(name, config.getBootstrapPriority(), config.getMainPriority()));
 			forkJoinWorkerThread.setName(workerName);
 			return forkJoinWorkerThread;
 		}, UtilMixin::func_240983_a_, true);
-		SmoothBoot.LOGGER.info(executorService2);
 		return (ExecutorService) executorService2;
 	}
 	
 	private static ExecutorService replIoWorker() {
 		return Executors.newCachedThreadPool((p_240978_0_) -> {
 			String workerName = "IO-Worker-" + NEXT_SERVER_WORKER_ID.getAndIncrement();
-			SmoothBoot.LOGGER.info("Initialized " + workerName);
+			SmoothBoot.LOGGER.debug("Initialized " + workerName);
 			
 			Thread thread = new Thread(p_240978_0_);
 			thread.setName(workerName);
@@ -123,6 +114,6 @@ public abstract class UtilMixin {
 	}
 	
 	private static <T> T select(String name, T bootstrap, T main) {
-		return name == "Bootstrap" ? bootstrap : main;
+		return Objects.equal(name, "Bootstrap") ? bootstrap : main;
 	}
 }
