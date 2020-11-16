@@ -37,12 +37,8 @@ public class SmoothBootConfigHandler {
 	
 	private static SmoothBootConfig newConfig() {
 		SmoothBootConfig config = new SmoothBootConfig();
-		config.setBootstrapThreads(1);
-		config.setMainThreads(Runtime.getRuntime().availableProcessors() - 1);
-		config.setBootstrapPriority(1);
-		config.setMainPriority(1);
-		config.setIoPriority(5);
-		config.setModLoadingPriority(1);
+		config.setClientPriority(3);
+		config.setClientLoadedPriority(5);
 		return config;
 	}
 }

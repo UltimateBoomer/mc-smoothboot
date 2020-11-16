@@ -4,8 +4,7 @@
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "smoothboot.refmap.json",
 	"mixins": [
-		"UtilMixin",
-		"ModListMixin"
+		"client.MainMixin"
 	],
 	"minVersion": "0.8"
 }

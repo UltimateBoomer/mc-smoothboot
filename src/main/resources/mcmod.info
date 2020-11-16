@@ -1,0 +1,19 @@
+[
+	{
+		"modid": "smoothboot",
+		"name": "Smooth Boot",
+		"description": "Smoothboot for legacy Minecraft",
+		"version": "${version}",
+		"mcversion": "${mcversion}",
+		"url": "",
+		"updateUrl": "",
+		"authorList": [
+			"UltimateBoomer"
+		],
+		"logoFile": "icon.png",
+		"screenshots": [
+		],
+		"dependencies": [
+		]
+	}
+]

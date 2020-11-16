@@ -1,58 +1,23 @@
 package com.ultimateboomer.smoothboot.config;
 
 public class SmoothBootConfig {
-	private int bootstrapThreads;
-	private int mainThreads;
-	private int bootstrapPriority;
-	private int mainPriority;
-	private int ioPriority;
-	private int modLoadingPriority;
+	private int clientPriority;
+	private int clientLoadedPriority;
 
-	public int getBootstrapThreads() {
-		return bootstrapThreads;
+	public int getClientPriority() {
+		return clientPriority;
 	}
 
-	public void setBootstrapThreads(int bootstrapThreads) {
-		this.bootstrapThreads = bootstrapThreads;
+	public void setClientPriority(int clientPriority) {
+		this.clientPriority = clientPriority;
 	}
 
-	public int getMainThreads() {
-		return mainThreads;
+	public int getClientLoadedPriority() {
+		return clientLoadedPriority;
 	}
 
-	public void setMainThreads(int mainThreads) {
-		this.mainThreads = mainThreads;
+	public void setClientLoadedPriority(int clientLoadedPriority) {
+		this.clientLoadedPriority = clientLoadedPriority;
 	}
 
-	public int getBootstrapPriority() {
-		return bootstrapPriority;
-	}
-
-	public void setBootstrapPriority(int bootstrapPriority) {
-		this.bootstrapPriority = bootstrapPriority;
-	}
-
-	public int getMainPriority() {
-		return mainPriority;
-	}
-
-	public void setMainPriority(int mainPriority) {
-		this.mainPriority = mainPriority;
-	}
-
-	public int getIoPriority() {
-		return ioPriority;
-	}
-
-	public void setIoPriority(int ioPriority) {
-		this.ioPriority = ioPriority;
-	}
-
-	public int getModLoadingPriority() {
-		return modLoadingPriority;
-	}
-
-	public void setModLoadingPriority(int modLoadingPriority) {
-		this.modLoadingPriority = modLoadingPriority;
-	}
 }
