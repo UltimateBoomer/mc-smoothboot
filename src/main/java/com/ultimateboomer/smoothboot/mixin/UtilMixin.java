@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 import com.ultimateboomer.smoothboot.SmoothBoot;
+import com.ultimateboomer.smoothboot.SmoothBootState;
 import com.ultimateboomer.smoothboot.util.LoggingForkJoinWorkerThread;
 
 import net.minecraft.Bootstrap;
@@ -23,9 +24,6 @@ import net.minecraft.util.math.MathHelper;
 
 @Mixin(Util.class)
 public abstract class UtilMixin {
-	private static boolean initConfig = false;
-	private static boolean initServerWorker = false;
-	
 	@Shadow
 	private static ExecutorService SERVER_WORKER_EXECUTOR;
 	
@@ -41,19 +39,20 @@ public abstract class UtilMixin {
 	// Redirecting or overwriting causes static initialization to be called too early resulting in NullPointerException being thrown.
 	@Overwrite()
 	public static Executor getServerWorkerExecutor() {
-		if (!initServerWorker) {
+		if (!SmoothBootState.initServerWorker) {
 			SERVER_WORKER_EXECUTOR = replWorker("Main");
 			SmoothBoot.LOGGER.debug("Main worker replaced");
-			initServerWorker = true;
+			SmoothBootState.initServerWorker = true;
 		}
+		
 		return SERVER_WORKER_EXECUTOR;
 	}
 	
 	// Replace createServerWorkerExecutor
 	private static ExecutorService replWorker(String name) {
-		if (!initConfig) {
+		if (!SmoothBootState.initConfig) {
 			SmoothBoot.regConfig();
-			initConfig = true;
+			SmoothBootState.initConfig = true;
 		}
 		
 		ExecutorService executorService2 = new ForkJoinPool(MathHelper.clamp(SmoothBoot.config.serverThreadCount,

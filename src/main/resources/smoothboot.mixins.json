@@ -4,12 +4,13 @@
   "package": "com.ultimateboomer.smoothboot.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+  	"UtilMixin"
   ],
   "client": [
-    "UtilMixin"
+    "client.MainMixin"
   ],
   "server": [
-  	"UtilMixin"
+  	"server.MinecraftServerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

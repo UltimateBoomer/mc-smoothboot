@@ -12,6 +12,17 @@ public class SmoothBootConfig implements ConfigData {
 	@Tooltip
 	public int serverThreadCount = Runtime.getRuntime().availableProcessors() - 1;
 	
+	@Tooltip
+	public int mainThreadCount = Runtime.getRuntime().availableProcessors() - 1;
+	
+	@BoundedDiscrete(min = 1, max = 10)
+	@Tooltip
+	public int gamePriority = 5;
+	
+	@BoundedDiscrete(min = 1, max = 10)
+	@Tooltip
+	public int mainPriority = 1;
+	
 	@BoundedDiscrete(min = 1, max = 10)
 	@Tooltip
 	public int serverPriority = 1;
