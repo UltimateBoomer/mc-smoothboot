@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 import com.ultimateboomer.smoothboot.SmoothBoot;
+import com.ultimateboomer.smoothboot.SmoothBootState;
 import com.ultimateboomer.smoothboot.util.LoggingForkJoinWorkerThread;
 
 import net.minecraft.util.Util;
@@ -22,10 +23,7 @@ import net.minecraft.util.math.MathHelper;
 
 @Mixin(Util.class)
 public abstract class UtilMixin {
-	private static boolean initConfig = false;
-	private static boolean initBootstrap = false;
-	private static boolean initMainWorker = false;
-	private static boolean initIOWorker = false;
+	
 	
 	@Shadow
 	private static ExecutorService BOOTSTRAP_EXECUTOR;
@@ -51,39 +49,39 @@ public abstract class UtilMixin {
 	// Redirecting or overwriting causes static initialization to be called too early resulting in NullPointerException being thrown.
 	@Overwrite()
 	public static Executor getBootstrapExecutor() {
-		if (!initBootstrap) {
+		if (!SmoothBootState.initBootstrap) {
 			BOOTSTRAP_EXECUTOR = replWorker("Bootstrap");
 			SmoothBoot.LOGGER.debug("Bootstrap worker replaced");
-			initBootstrap = true;
+			SmoothBootState.initBootstrap = true;
 		}
 		return BOOTSTRAP_EXECUTOR;
 	}
 	
 	@Overwrite()
 	public static Executor getMainWorkerExecutor() {
-		if (!initMainWorker) {
+		if (!SmoothBootState.initMainWorker) {
 			MAIN_WORKER_EXECUTOR = replWorker("Main");
 			SmoothBoot.LOGGER.debug("Main worker replaced");
-			initMainWorker = true;
+			SmoothBootState.initMainWorker = true;
 		}
 		return MAIN_WORKER_EXECUTOR;
 	}
 	
 	@Overwrite
 	public static Executor getIoWorkerExecutor() {
-		if (!initIOWorker) {
+		if (!SmoothBootState.initIOWorker) {
 			IO_WORKER_EXECUTOR = replIoWorker();
 			SmoothBoot.LOGGER.debug("IO worker replaced");
-			initIOWorker = true;
+			SmoothBootState.initIOWorker = true;
 		}
 		return IO_WORKER_EXECUTOR;
 	}
 	
 	// Replace createWorker
 	private static ExecutorService replWorker(String name) {
-		if (!initConfig) {
+		if (!SmoothBootState.initConfig) {
 			SmoothBoot.regConfig();
-			initConfig = true;
+			SmoothBootState.initConfig = true;
 		}
 		
 		ExecutorService executorService2 = new ForkJoinPool(MathHelper.clamp(select(name, SmoothBoot.config.bootstrapThreadCount,
@@ -96,7 +94,6 @@ public abstract class UtilMixin {
 				forkJoinWorkerThread.setName(workerName);
 				return forkJoinWorkerThread;
 		}, UtilMixin::method_18347, true);
-		SmoothBoot.LOGGER.info(executorService2);
 		return executorService2;
 	}
 	

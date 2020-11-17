@@ -17,6 +17,10 @@ public class SmoothBootConfig implements ConfigData {
 	
 	@BoundedDiscrete(min = 1, max = 10)
 	@Tooltip
+	public int gamePriority = 5;
+	
+	@BoundedDiscrete(min = 1, max = 10)
+	@Tooltip
 	public int bootstrapPriority = 1;
 	
 	@BoundedDiscrete(min = 1, max = 10)
