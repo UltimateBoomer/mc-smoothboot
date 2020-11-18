@@ -34,7 +34,7 @@ logoFile="icon.png" #optional
 authors="UltimateBoomer" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Optimize Minecraft's loading process.
+    Optimize Minecraft's loading process.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.smoothboot]] #optional
