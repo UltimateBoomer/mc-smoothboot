@@ -11,8 +11,4 @@ public class SmoothBoot {
 	public static final String MOD_NAME = "Smooth Boot";
 	
 	public static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
-
-	public SmoothBoot() {
-		
-	}
 }

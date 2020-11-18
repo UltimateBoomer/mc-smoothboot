@@ -3,6 +3,7 @@ package com.ultimateboomer.smoothboot.config;
 public class SmoothBootConfig {
 	private int bootstrapThreads;
 	private int mainThreads;
+	private int gamePriority;
 	private int bootstrapPriority;
 	private int mainPriority;
 	private int ioPriority;
@@ -22,6 +23,14 @@ public class SmoothBootConfig {
 
 	public void setMainThreads(int mainThreads) {
 		this.mainThreads = mainThreads;
+	}
+
+	public int getGamePriority() {
+		return gamePriority;
+	}
+
+	public void setGamePriority(int gamePriority) {
+		this.gamePriority = gamePriority;
 	}
 
 	public int getBootstrapPriority() {

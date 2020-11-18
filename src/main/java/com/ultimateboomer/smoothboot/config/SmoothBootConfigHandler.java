@@ -39,6 +39,7 @@ public class SmoothBootConfigHandler {
 		SmoothBootConfig config = new SmoothBootConfig();
 		config.setBootstrapThreads(1);
 		config.setMainThreads(Runtime.getRuntime().availableProcessors() - 1);
+		config.setGamePriority(5);
 		config.setBootstrapPriority(1);
 		config.setMainPriority(1);
 		config.setIoPriority(5);

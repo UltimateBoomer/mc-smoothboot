@@ -24,7 +24,6 @@ import net.minecraft.util.math.MathHelper;
 
 @Mixin(Util.class)
 public abstract class UtilMixin {
-	private static boolean initConfig = false;
 	private static boolean initBootstrapExecutor = false;
 	private static boolean initMainWorkerExecutor = false;
 	private static boolean initIoWorker = false;
@@ -80,10 +79,6 @@ public abstract class UtilMixin {
 	
 	// Replace createNamedService
 	private static ExecutorService replWorker(String name) {
-		if (!initConfig) {
-			SmoothBootConfigHandler.readConfig();
-			initConfig = true;
-		}
 		SmoothBootConfig config = SmoothBootConfigHandler.config;
 		Object executorService2 = new ForkJoinPool(MathHelper.clamp(select(name, config.getBootstrapThreads(),
 			config.getMainThreads()), 1, 0x7fff), (forkJoinPool) -> {
