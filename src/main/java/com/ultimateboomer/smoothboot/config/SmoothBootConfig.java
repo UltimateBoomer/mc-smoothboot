@@ -1,13 +1,28 @@
 package com.ultimateboomer.smoothboot.config;
 
+import net.minecraft.util.math.MathHelper;
+
 public class SmoothBootConfig {
-	private int bootstrapThreads;
-	private int mainThreads;
-	private int gamePriority;
-	private int bootstrapPriority;
-	private int mainPriority;
-	private int ioPriority;
-	private int modLoadingPriority;
+	private int bootstrapThreads = 1;
+	private int mainThreads = Runtime.getRuntime().availableProcessors() - 1;
+	private int gamePriority = 5;
+	private int bootstrapPriority = 1;
+	private int mainPriority = 1;
+	private int ioPriority = 5;
+	private int modLoadingPriority = 1;
+	
+	/**
+	 * Make sure the config values are within range
+	 */
+	public void validate() {
+		bootstrapThreads = Math.max(bootstrapPriority, 1);
+		mainThreads = Math.max(mainThreads, 1);
+		gamePriority = MathHelper.clamp(gamePriority, 1, 10);
+		bootstrapPriority = MathHelper.clamp(bootstrapPriority, 1, 10);
+		mainPriority = MathHelper.clamp(mainPriority, 1, 10);
+		ioPriority = MathHelper.clamp(ioPriority, 1, 10);
+		modLoadingPriority = MathHelper.clamp(modLoadingPriority, 1, 10);
+	}
 
 	public int getBootstrapThreads() {
 		return bootstrapThreads;
