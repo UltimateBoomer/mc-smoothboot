@@ -1,7 +1,9 @@
 {
 	"text.autoconfig.smoothboot.title": "Smooth Boot",
+	"text.autoconfig.smoothboot.option.serverThreadCount.@PrefixText": "Thread Count (lower = use less CPU, higher = use more CPU)",
 	"text.autoconfig.smoothboot.option.serverThreadCount": "Server Worker Thread Count",
-	"text.autoconfig.smoothboot.option.serverThreadCount.@Tooltip": "Change # of processor threads used",
+	"text.autoconfig.smoothboot.option.gamePriority.@PrefixText": "Thread Priority (lower = more performance for other processes, higher = more performance for Minecraft, default = 5)",
+	"text.autoconfig.smoothboot.option.gamePriority": "Game Thread Priority",
 	"text.autoconfig.smoothboot.option.serverPriority": "Server Worker Priority",
-	"text.autoconfig.smoothboot.option.serverPriority.@Tooltip": "Change Java thread priority"
+	"text.autoconfig.smoothboot.option.mainPriority": "Main Thread Priority"
 }
