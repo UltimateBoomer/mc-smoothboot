@@ -12,7 +12,7 @@ public class SmoothBootConfig implements ConfigData {
 	@PrefixText
 	public int bootstrapThreadCount = 1;
 	
-	public int mainThreadCount = Runtime.getRuntime().availableProcessors() - 1;
+	public int mainThreadCount = Math.min(Runtime.getRuntime().availableProcessors() - 1, 7);
 	
 	@PrefixText
 	@BoundedDiscrete(min = 1, max = 10)

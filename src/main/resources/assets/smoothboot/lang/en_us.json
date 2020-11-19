@@ -1,6 +1,6 @@
 {
 	"text.autoconfig.smoothboot.title": "Smooth Boot",
-	"text.autoconfig.smoothboot.option.bootstrapThreadCount.@PrefixText": "Thread Count (lower = use less CPU, higher = use more CPU)",
+	"text.autoconfig.smoothboot.option.bootstrapThreadCount.@PrefixText": "Thread Count (lower = use less CPU, higher = use more CPU)\nMake sure your CPU is adequetely cooled if you want to raise these values.",
 	"text.autoconfig.smoothboot.option.bootstrapThreadCount": "Bootstrap Worker Thread Count",
 	"text.autoconfig.smoothboot.option.mainThreadCount": "Main Worker Thread Count",
 	"text.autoconfig.smoothboot.option.gamePriority.@PrefixText": "Thread Priority (lower = more performance for other processes, higher = more performance for Minecraft, default = 5)",
