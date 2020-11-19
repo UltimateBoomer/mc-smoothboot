@@ -1,1 +1,1 @@
-MixinConnector: com.ultimateboomer.smoothboot.ModMixinConnector
+MixinConnector: com.ultimateboomer.smoothboot.SmoothBootMixinConnector

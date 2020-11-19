@@ -1,43 +1,47 @@
 package com.ultimateboomer.smoothboot.config;
 
+import net.minecraft.util.math.MathHelper;
+
 public class SmoothBootConfig {
-	private int bootstrapThreads;
-	private int mainThreads;
-	private int bootstrapPriority;
-	private int mainPriority;
-	private int ioPriority;
-	private int modLoadingPriority;
-
-	public int getBootstrapThreads() {
-		return bootstrapThreads;
+	private int serverThreads = Math.min(Runtime.getRuntime().availableProcessors() - 1, 7);
+	private int gamePriority = 5;
+	private int serverPriority = 1;
+	private int ioPriority = 5;
+	private int modLoadingPriority = 1;
+	
+	/**
+	 * Make sure the config values are within range
+	 */
+	public void validate() {
+		serverThreads = Math.max(serverThreads, 1);
+		gamePriority = MathHelper.clamp(gamePriority, 1, 10);
+		serverPriority = MathHelper.clamp(serverPriority, 1, 10);
+		ioPriority = MathHelper.clamp(ioPriority, 1, 10);
+		modLoadingPriority = MathHelper.clamp(modLoadingPriority, 1, 10);
 	}
 
-	public void setBootstrapThreads(int bootstrapThreads) {
-		this.bootstrapThreads = bootstrapThreads;
+	public int getServerThreads() {
+		return serverThreads;
 	}
 
-	public int getMainThreads() {
-		return mainThreads;
+	public void setServerThreads(int mainThreads) {
+		this.serverThreads = mainThreads;
 	}
 
-	public void setMainThreads(int mainThreads) {
-		this.mainThreads = mainThreads;
+	public int getGamePriority() {
+		return gamePriority;
 	}
 
-	public int getBootstrapPriority() {
-		return bootstrapPriority;
+	public void setGamePriority(int gamePriority) {
+		this.gamePriority = gamePriority;
 	}
 
-	public void setBootstrapPriority(int bootstrapPriority) {
-		this.bootstrapPriority = bootstrapPriority;
+	public int getServerPriority() {
+		return serverPriority;
 	}
 
-	public int getMainPriority() {
-		return mainPriority;
-	}
-
-	public void setMainPriority(int mainPriority) {
-		this.mainPriority = mainPriority;
+	public void setServerPriority(int mainPriority) {
+		this.serverPriority = mainPriority;
 	}
 
 	public int getIoPriority() {

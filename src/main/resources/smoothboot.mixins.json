@@ -7,5 +7,11 @@
 		"UtilMixin",
 		"ModListMixin"
 	],
+	"client": [
+		"client.MainMixin"
+	],
+	"server": [
+		"server.MinecraftServerMixin"
+	],
 	"minVersion": "0.8"
 }

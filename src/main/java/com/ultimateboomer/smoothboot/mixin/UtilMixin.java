@@ -25,7 +25,6 @@ import net.minecraft.util.registry.Bootstrap;
 
 @Mixin(Util.class)
 public abstract class UtilMixin {
-	private static boolean initConfig = false;
 	private static boolean initServerExecutor = false;
 	
 	@Shadow
@@ -52,19 +51,15 @@ public abstract class UtilMixin {
 	
 	// Replace createServerExecutor
 	private static ExecutorService replWorker(String name) {
-		if (!initConfig) {
-			SmoothBootConfigHandler.readConfig();
-			initConfig = true;
-		}
 		SmoothBootConfig config = SmoothBootConfigHandler.config;
 		
-		ForkJoinPool executorService2 = new ForkJoinPool(MathHelper.clamp(config.getMainThreads(),
+		ForkJoinPool executorService2 = new ForkJoinPool(MathHelper.clamp(config.getServerThreads(),
 			1, 0x7fff), (forkJoinPool) -> {
 			String workerName = "Server-Worker-" + name + NEXT_SERVER_WORKER_ID.getAndIncrement();
 			SmoothBoot.LOGGER.debug("Initialized " + workerName);
 			
 			ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, LOGGER);
-			forkJoinWorkerThread.setPriority(config.getMainPriority());
+			forkJoinWorkerThread.setPriority(config.getServerPriority());
 			forkJoinWorkerThread.setName(workerName);
 			return forkJoinWorkerThread;
 		}, (thread, throwable) -> {
