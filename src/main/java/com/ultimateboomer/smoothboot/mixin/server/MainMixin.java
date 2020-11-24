@@ -19,7 +19,7 @@ public class MainMixin {
 			SmoothBootState.initConfig = true;
 		}
 		
-		Thread.currentThread().setPriority(SmoothBoot.config.gamePriority);
+		Thread.currentThread().setPriority(SmoothBoot.config.threadPriority.game);
 		SmoothBoot.LOGGER.debug("Initialized server game thread");
 	}
 }

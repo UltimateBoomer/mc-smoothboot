@@ -6,25 +6,39 @@ import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry.BoundedDiscrete;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry.Gui.PrefixText;
+import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry.Gui.Tooltip;
+import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry.Gui.TransitiveObject;
 
 @Config(name = SmoothBoot.MOD_ID)
 public class SmoothBootConfig implements ConfigData {
 	@PrefixText
-	public int bootstrapThreadCount = 1;
-	
-	public int mainThreadCount = Math.min(Runtime.getRuntime().availableProcessors() - 1, 7);
+	@TransitiveObject
+	public ThreadCount threadCount = new ThreadCount();
 	
 	@PrefixText
-	@BoundedDiscrete(min = 1, max = 10)
-	public int gamePriority = 5;
+	@TransitiveObject
+	public ThreadPriority threadPriority = new ThreadPriority();
 	
-	@BoundedDiscrete(min = 1, max = 10)
-	public int bootstrapPriority = 1;
+	public static class ThreadCount {
+		@Tooltip(count = 2)
+		public int bootstrap = 1;
+		
+		@Tooltip(count = 2)
+		public int main = Math.min(Runtime.getRuntime().availableProcessors() - 1, 7);
+	}
 	
-	@BoundedDiscrete(min = 1, max = 10)
-	public int mainPriority = 1;
-	
-	@BoundedDiscrete(min = 1, max = 10)
-	public int ioPriority = 5;
+	public static class ThreadPriority {
+		@BoundedDiscrete(min = 1, max = 10)
+		public int game = 5;
+		
+		@BoundedDiscrete(min = 1, max = 10)
+		public int bootstrap = 3;
+		
+		@BoundedDiscrete(min = 1, max = 10)
+		public int main = 3;
+		
+		@BoundedDiscrete(min = 1, max = 10)
+		public int io = 3;
+	}
 }
  

@@ -84,13 +84,14 @@ public abstract class UtilMixin {
 			SmoothBootState.initConfig = true;
 		}
 		
-		ExecutorService executorService2 = new ForkJoinPool(MathHelper.clamp(select(name, SmoothBoot.config.bootstrapThreadCount,
-			SmoothBoot.config.mainThreadCount), 1, 0x7fff), (forkJoinPool) -> {
+		ExecutorService executorService2 = new ForkJoinPool(MathHelper.clamp(select(name, SmoothBoot.config.threadCount.bootstrap,
+			SmoothBoot.config.threadCount.main), 1, 0x7fff), (forkJoinPool) -> {
 				String workerName = "Worker-" + name + "-" + NEXT_WORKER_ID.getAndIncrement();
 				SmoothBoot.LOGGER.debug("Initialized " + workerName);
 				
 				ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, LOGGER);
-				forkJoinWorkerThread.setPriority(select(name, SmoothBoot.config.bootstrapPriority, SmoothBoot.config.mainPriority));
+				forkJoinWorkerThread.setPriority(select(name, SmoothBoot.config.threadPriority.bootstrap,
+					SmoothBoot.config.threadPriority.main));
 				forkJoinWorkerThread.setName(workerName);
 				return forkJoinWorkerThread;
 		}, UtilMixin::method_18347, true);
@@ -106,7 +107,7 @@ public abstract class UtilMixin {
 			Thread thread = new Thread(runnable);
 			thread.setName(workerName);
 			thread.setDaemon(true);
-			thread.setPriority(SmoothBoot.config.ioPriority);
+			thread.setPriority(SmoothBoot.config.threadPriority.io);
 			thread.setUncaughtExceptionHandler(UtilMixin::method_18347);
 			return thread;
 		});
