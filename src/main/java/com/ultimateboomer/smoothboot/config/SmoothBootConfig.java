@@ -24,7 +24,7 @@ public class SmoothBootConfig implements ConfigData {
 		public int bootstrap = 1;
 		
 		@Tooltip(count = 2)
-		public int main = Math.min(Runtime.getRuntime().availableProcessors() - 1, 7);
+		public int main = Math.max(Runtime.getRuntime().availableProcessors() / 2, 1);
 	}
 	
 	public static class ThreadPriority {
