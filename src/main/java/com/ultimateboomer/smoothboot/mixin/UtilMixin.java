@@ -58,13 +58,13 @@ public abstract class UtilMixin {
 			SmoothBootState.initConfig = true;
 		}
 		
-		ExecutorService executorService2 = new ForkJoinPool(MathHelper.clamp(SmoothBoot.config.serverThreadCount,
+		ExecutorService executorService2 = new ForkJoinPool(MathHelper.clamp(SmoothBoot.config.threadCount.server,
 			1, 0x7fff), (forkJoinPool) -> {
 				String workerName = "Server-Worker-" + name + "-" + NEXT_SERVER_WORKER_ID.getAndIncrement();
 				SmoothBoot.LOGGER.debug("Initialized " + workerName);
 				
 				ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, LOGGER);
-				forkJoinWorkerThread.setPriority(SmoothBoot.config.serverPriority);
+				forkJoinWorkerThread.setPriority(SmoothBoot.config.threadPriority.server);
 				forkJoinWorkerThread.setName(workerName);
 				return forkJoinWorkerThread;
 		}, (thread, throwable) -> {
