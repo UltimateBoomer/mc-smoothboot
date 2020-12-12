@@ -14,7 +14,7 @@ public class SmoothBootConfigHandler {
 	public static SmoothBootConfig config;
 	
 	public static void readConfig() throws IOException {
-		String configPath = System.getProperty("user.dir") + "\\config\\" + SmoothBoot.MOD_ID + ".json";
+		String configPath = System.getProperty("user.dir") + "/config/" + SmoothBoot.MOD_ID + ".json";
 		SmoothBoot.LOGGER.debug("Config path: " + configPath);
 		
 		// Read config
