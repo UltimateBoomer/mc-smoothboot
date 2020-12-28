@@ -1,6 +1,6 @@
-package com.ultimateboomer.smoothboot.config;
+package io.github.ultimateboomer.smoothboot.config;
 
-import com.ultimateboomer.smoothboot.SmoothBoot;
+import io.github.ultimateboomer.smoothboot.SmoothBoot;
 
 import io.github.prospector.modmenu.api.ConfigScreenFactory;
 import io.github.prospector.modmenu.api.ModMenuApi;

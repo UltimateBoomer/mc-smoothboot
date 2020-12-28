@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.4-SNAPSHOT'
+	id 'fabric-loom' version '0.5-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -7,7 +7,7 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name
-version = project.minecraft_revision + "-" + project.mod_version
+version = project.minecraft_version + "-" + project.mod_version
 group = project.maven_group
 
 dependencies {
@@ -73,6 +73,11 @@ publishing {
 			artifact(sourcesJar) {
 				builtBy remapSourcesJar
 			}
+
+			pom {
+				name = "${archives_base_name}"
+				description = "optimize Minecraft threaded performance"
+			}
 		}
 	}
 
@@ -80,5 +85,8 @@ publishing {
 	repositories {
 		// uncomment to publish to the local maven
 		// mavenLocal()
+		maven {
+
+		}
 	}
 }

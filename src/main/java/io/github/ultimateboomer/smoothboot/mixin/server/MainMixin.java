@@ -1,12 +1,11 @@
-package com.ultimateboomer.smoothboot.mixin.server;
+package io.github.ultimateboomer.smoothboot.mixin.server;
 
+import io.github.ultimateboomer.smoothboot.SmoothBoot;
+import io.github.ultimateboomer.smoothboot.SmoothBootState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import com.ultimateboomer.smoothboot.SmoothBoot;
-import com.ultimateboomer.smoothboot.SmoothBootState;
 
 import net.minecraft.server.Main;
 

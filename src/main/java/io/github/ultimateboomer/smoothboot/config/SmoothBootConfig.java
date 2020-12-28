@@ -1,6 +1,6 @@
-package com.ultimateboomer.smoothboot.config;
+package io.github.ultimateboomer.smoothboot.config;
 
-import com.ultimateboomer.smoothboot.SmoothBoot;
+import io.github.ultimateboomer.smoothboot.SmoothBoot;
 
 import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;

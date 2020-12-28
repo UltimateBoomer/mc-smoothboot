@@ -19,10 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.ultimateboomer.smoothboot.SmoothBoot"
+      "io.github.ultimateboomer.smoothboot.SmoothBoot"
     ],
     "modmenu": [
-      "com.ultimateboomer.smoothboot.config.SmoothBootModMenu"
+      "io.github.ultimateboomer.smoothboot.config.SmoothBootModMenu"
     ]
   },
   "mixins": [
