@@ -1,4 +1,4 @@
-package com.ultimateboomer.smoothboot.mixin;
+package io.github.ultimateboomer.smoothboot.mixin;
 
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinWorkerThread;
@@ -6,14 +6,14 @@ import java.util.concurrent.ForkJoinWorkerThread;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
-import com.ultimateboomer.smoothboot.SmoothBoot;
-import com.ultimateboomer.smoothboot.config.SmoothBootConfigHandler;
+import io.github.ultimateboomer.smoothboot.SmoothBoot;
+import io.github.ultimateboomer.smoothboot.config.SmoothBootConfigHandler;
 
 import net.minecraftforge.fml.ModWorkManager;
 
 @Mixin(ModWorkManager.class)
 public class ModWorkManagerMixin {
-	@Overwrite
+	@Overwrite(remap = false)
 	private static ForkJoinWorkerThread newForkJoinWorkerThread(ForkJoinPool pool) {
 		ForkJoinWorkerThread thread = ForkJoinPool.defaultForkJoinWorkerThreadFactory.newThread(pool);
 		String workerName = "modloading-worker-" + thread.getPoolIndex();

@@ -1,4 +1,4 @@
-package com.ultimateboomer.smoothboot.mixin;
+package io.github.ultimateboomer.smoothboot.mixin;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -7,6 +7,8 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinWorkerThread;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import io.github.ultimateboomer.smoothboot.config.SmoothBootConfig;
+import io.github.ultimateboomer.smoothboot.config.SmoothBootConfigHandler;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,10 +16,8 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 import com.google.common.base.Objects;
-import com.ultimateboomer.smoothboot.SmoothBoot;
-import com.ultimateboomer.smoothboot.config.SmoothBootConfig;
-import com.ultimateboomer.smoothboot.config.SmoothBootConfigHandler;
-import com.ultimateboomer.smoothboot.util.LoggingForkJoinWorkerThread;
+import io.github.ultimateboomer.smoothboot.SmoothBoot;
+import io.github.ultimateboomer.smoothboot.util.LoggingForkJoinWorkerThread;
 
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
@@ -27,15 +27,15 @@ public abstract class UtilMixin {
 	private static boolean initBootstrapExecutor = false;
 	private static boolean initMainWorkerExecutor = false;
 	private static boolean initIoWorker = false;
-	
+
 	@Shadow
-	private static ExecutorService field_240974_d_;
-	
+	private static ExecutorService BOOTSTRAP_SERVICE;
+
 	@Shadow
 	private static ExecutorService SERVER_EXECUTOR;
-	
+
 	@Shadow
-	private static ExecutorService field_240975_f_;
+	private static ExecutorService RENDERING_SERVICE;
 	
 	@Shadow
 	@Final
@@ -46,41 +46,46 @@ public abstract class UtilMixin {
 	private static Logger LOGGER;
 	
 	@Shadow
-	protected static void func_240983_a_(Thread thread, Throwable throwable) {};
+	protected static void printException(Thread thread, Throwable throwable) {};
 	
 	// Probably not ideal, but this is the only way I found to modify createWorker without causing errors.
 	// Redirecting or overwriting causes static initialization to be called too early resulting in NullPointerException being thrown.
-	@Overwrite()
-	public static Executor func_240991_e_() {
+	@Overwrite
+	public static Executor getBootstrapService() {
 		if (!initBootstrapExecutor) {
-			field_240974_d_ = replWorker("Bootstrap");
+			BOOTSTRAP_SERVICE = replWorker("Bootstrap");
 			initBootstrapExecutor = true;
+			SmoothBoot.LOGGER.debug("Replaced Bootstrap Executor");
 		}
-		return field_240974_d_;
+
+		return BOOTSTRAP_SERVICE;
 	}
-	
-	@Overwrite()
+
+	@Overwrite
 	public static Executor getServerExecutor() {
 		if (!initMainWorkerExecutor) {
 			SERVER_EXECUTOR = replWorker("Main");
 			initMainWorkerExecutor = true;
+			SmoothBoot.LOGGER.debug("Replaced Main Executor");
 		}
+
 		return SERVER_EXECUTOR;
 	}
-	
+
 	@Overwrite
-	public static Executor func_240992_g_() {
+	public static Executor getRenderingService() {
 		if (!initIoWorker) {
-			field_240975_f_ = replIoWorker();
+			RENDERING_SERVICE = replIoWorker();
 			initIoWorker = true;
+			SmoothBoot.LOGGER.debug("Replaced IO Executor");
 		}
-		return field_240975_f_;
+		return RENDERING_SERVICE;
 	}
 	
 	// Replace createNamedService
 	private static ExecutorService replWorker(String name) {
 		SmoothBootConfig config = SmoothBootConfigHandler.config;
-		Object executorService2 = new ForkJoinPool(MathHelper.clamp(select(name, config.getBootstrapThreads(),
+		ExecutorService executorService2 = new ForkJoinPool(MathHelper.clamp(select(name, config.getBootstrapThreads(),
 			config.getMainThreads()), 1, 0x7fff), (forkJoinPool) -> {
 			String workerName = "Worker-" + name + NEXT_SERVER_WORKER_ID.getAndIncrement();
 			SmoothBoot.LOGGER.debug("Initialized " + workerName);
@@ -89,8 +94,8 @@ public abstract class UtilMixin {
 			forkJoinWorkerThread.setPriority(select(name, config.getBootstrapPriority(), config.getMainPriority()));
 			forkJoinWorkerThread.setName(workerName);
 			return forkJoinWorkerThread;
-		}, UtilMixin::func_240983_a_, true);
-		return (ExecutorService) executorService2;
+		}, UtilMixin::printException, true);
+		return executorService2;
 	}
 	
 	private static ExecutorService replIoWorker() {
@@ -101,7 +106,7 @@ public abstract class UtilMixin {
 			Thread thread = new Thread(p_240978_0_);
 			thread.setName(workerName);
 			thread.setPriority(SmoothBootConfigHandler.config.getIoPriority());
-			thread.setUncaughtExceptionHandler(UtilMixin::func_240983_a_);
+			thread.setUncaughtExceptionHandler(UtilMixin::printException);
 			return thread;
 		});
 	}
