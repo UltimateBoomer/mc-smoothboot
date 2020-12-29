@@ -1,4 +1,4 @@
-package com.ultimateboomer.smoothboot;
+package io.github.ultimateboomer.smoothboot;
 
 import org.spongepowered.asm.mixin.Mixins;
 import org.spongepowered.asm.mixin.connect.IMixinConnector;

@@ -1,4 +1,4 @@
-package com.ultimateboomer.smoothboot.mixin;
+package io.github.ultimateboomer.smoothboot.mixin;
 
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.Executor;
@@ -7,16 +7,16 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinWorkerThread;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import io.github.ultimateboomer.smoothboot.config.SmoothBootConfig;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-import com.ultimateboomer.smoothboot.SmoothBoot;
-import com.ultimateboomer.smoothboot.config.SmoothBootConfig;
-import com.ultimateboomer.smoothboot.config.SmoothBootConfigHandler;
-import com.ultimateboomer.smoothboot.util.LoggingForkJoinWorkerThread;
+import io.github.ultimateboomer.smoothboot.SmoothBoot;
+import io.github.ultimateboomer.smoothboot.config.SmoothBootConfigHandler;
+import io.github.ultimateboomer.smoothboot.util.LoggingForkJoinWorkerThread;
 
 import net.minecraft.crash.ReportedException;
 import net.minecraft.util.Util;

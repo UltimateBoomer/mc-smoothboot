@@ -1,4 +1,4 @@
-package com.ultimateboomer.smoothboot.config;
+package io.github.ultimateboomer.smoothboot.config;
 
 import net.minecraft.util.math.MathHelper;
 

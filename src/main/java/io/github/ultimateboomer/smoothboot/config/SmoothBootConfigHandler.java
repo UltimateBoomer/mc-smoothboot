@@ -1,4 +1,4 @@
-package com.ultimateboomer.smoothboot.config;
+package io.github.ultimateboomer.smoothboot.config;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
-import com.ultimateboomer.smoothboot.SmoothBoot;
+import io.github.ultimateboomer.smoothboot.SmoothBoot;
 
 public class SmoothBootConfigHandler {
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();

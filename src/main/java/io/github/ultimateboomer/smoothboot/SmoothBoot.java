@@ -1,9 +1,8 @@
-package com.ultimateboomer.smoothboot;
+package io.github.ultimateboomer.smoothboot;
 
+import io.github.ultimateboomer.smoothboot.config.SmoothBootConfigHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.ultimateboomer.smoothboot.config.SmoothBootConfigHandler;
 
 import net.minecraftforge.fml.common.Mod;
 

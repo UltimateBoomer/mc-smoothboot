@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "com.ultimateboomer.smoothboot.mixin",
+	"package": "io.github.ultimateboomer.smoothboot.mixin",
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "smoothboot.refmap.json",
 	"mixins": [
