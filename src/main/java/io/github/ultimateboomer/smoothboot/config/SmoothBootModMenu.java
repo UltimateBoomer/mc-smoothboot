@@ -1,8 +1,8 @@
-package com.ultimateboomer.smoothboot.config;
+package io.github.ultimateboomer.smoothboot.config;
 
 import java.util.function.Function;
 
-import com.ultimateboomer.smoothboot.SmoothBoot;
+import io.github.ultimateboomer.smoothboot.SmoothBoot;
 
 import io.github.prospector.modmenu.api.ModMenuApi;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;

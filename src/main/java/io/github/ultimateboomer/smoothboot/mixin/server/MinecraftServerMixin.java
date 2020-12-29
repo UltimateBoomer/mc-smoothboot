@@ -1,17 +1,16 @@
-package com.ultimateboomer.smoothboot.mixin.client;
+package io.github.ultimateboomer.smoothboot.mixin.server;
 
+import io.github.ultimateboomer.smoothboot.SmoothBoot;
+import io.github.ultimateboomer.smoothboot.SmoothBootState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.ultimateboomer.smoothboot.SmoothBoot;
-import com.ultimateboomer.smoothboot.SmoothBootState;
+import net.minecraft.server.MinecraftServer;
 
-import net.minecraft.client.main.Main;
-
-@Mixin(Main.class)
-public class MainMixin {
+@Mixin(MinecraftServer.class)
+public class MinecraftServerMixin {
 	@Inject(method = "main", at = @At("HEAD"), remap = false)
 	private static void onMain(CallbackInfo ci) {
 		if (!SmoothBootState.initConfig) {
@@ -20,6 +19,6 @@ public class MainMixin {
 		}
 		
 		Thread.currentThread().setPriority(SmoothBoot.config.threadPriority.game);
-		SmoothBoot.LOGGER.debug("Initialized client game thread");
+		SmoothBoot.LOGGER.debug("Initialized server game thread");
 	}
 }
