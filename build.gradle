@@ -1,6 +1,7 @@
 plugins {
 	id 'fabric-loom' version '0.5-SNAPSHOT'
 	id 'maven-publish'
+	id "com.jfrog.bintray" version "1.8.5"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -53,13 +54,30 @@ tasks.withType(JavaCompile) {
 // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 // if it is present.
 // If you remove this task, sources will not be generated.
+jar {
+	from "LICENSE"
+}
+
 task sourcesJar(type: Jar, dependsOn: classes) {
 	classifier = "sources"
 	from sourceSets.main.allSource
 }
 
-jar {
-	from "LICENSE"
+bintray {
+	user = System.getenv('BINTRAY_USER')
+	key = System.getenv('BINTRAY_KEY')
+	publications = ['mavenJava']
+	//override = true
+	pkg {
+		repo = 'maven'
+		name = archivesBaseName
+		desc = project.mod_desc
+		licenses = ['MIT']
+		vcsUrl = 'https://github.com/UltimateBoomer/mc-smoothboot.git'
+		version {
+			name = project.version
+		}
+	}
 }
 
 // configure the maven publication
@@ -77,19 +95,6 @@ publishing {
 			groupId = project.maven_group
 			artifactId = project.archivesBaseName
 			version = project.version
-		}
-	}
-
-	// select the repositories you want to publish to
-	repositories {
-		//mavenLocal()
-		def ENV = System.getenv()
-		maven {
-			url = ENV.MAVEN_URL
-			credentials {
-				username ENV.MAVEN_USERNAME
-				password ENV.MAVEN_PASSWORD
-			}
 		}
 	}
 }
