@@ -4,7 +4,8 @@
   "package": "io.github.ultimateboomer.smoothboot.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-  	"UtilMixin"
+  	"UtilMixin",
+    "SchemasMixin"
   ],
   "client": [
     "client.MainMixin"

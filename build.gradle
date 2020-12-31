@@ -1,13 +1,14 @@
 plugins {
 	id 'fabric-loom' version '0.4-SNAPSHOT'
 	id 'maven-publish'
+	id "com.jfrog.bintray" version "1.8.5"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-archivesBaseName = project.archives_base_name
-version = project.minecraft_revision + "-" + project.mod_version
+archivesBaseName = project.mod_id + "-fabric"
+version = project.minecraft_version + "-" + project.mod_version
 group = project.maven_group
 
 dependencies {
@@ -62,6 +63,23 @@ jar {
 	from "LICENSE"
 }
 
+bintray {
+	user = System.getenv('BINTRAY_USER')
+	key = System.getenv('BINTRAY_KEY')
+	publications = ['mavenJava']
+	//override = true
+	pkg {
+		repo = 'maven'
+		name = archivesBaseName
+		desc = project.mod_desc
+		licenses = ['MIT']
+		vcsUrl = 'https://github.com/UltimateBoomer/mc-smoothboot.git'
+		version {
+			name = project.version
+		}
+	}
+}
+
 // configure the maven publication
 publishing {
 	publications {
@@ -73,12 +91,11 @@ publishing {
 			artifact(sourcesJar) {
 				builtBy remapSourcesJar
 			}
+
+			groupId = project.maven_group
+			artifactId = project.archivesBaseName
+			version = project.version
 		}
 	}
-
-	// select the repositories you want to publish to
-	repositories {
-		// uncomment to publish to the local maven
-		// mavenLocal()
-	}
 }
+
