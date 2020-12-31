@@ -16,7 +16,7 @@ public class SmoothBootModMenu implements ModMenuApi {
 	public String getModId() {
 		return SmoothBoot.MOD_ID;
 	}
-	
+
 	@Override
 	public Function<Screen, ? extends Screen> getConfigScreenFactory() {
 		return parent -> AutoConfig.getConfigScreen(SmoothBootConfig.class, parent).get();

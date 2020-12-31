@@ -25,15 +25,15 @@ import net.minecraft.util.math.MathHelper;
 public abstract class UtilMixin {
 	@Shadow
 	private static ExecutorService SERVER_WORKER_EXECUTOR;
-	
+
 	@Shadow
 	@Final
 	private static AtomicInteger field_18034;
-	
+
 	@Shadow
 	@Final
 	private static Logger LOGGER;
-	
+
 	// Probably not ideal, but this is the only way I found to modify createWorker without causing errors.
 	// Redirecting or overwriting causes static initialization to be called too early resulting in NullPointerException being thrown.
 	@Overwrite()
@@ -43,38 +43,38 @@ public abstract class UtilMixin {
 			SmoothBoot.LOGGER.debug("Main worker replaced");
 			SmoothBootState.initServerWorker = true;
 		}
-		
+
 		return SERVER_WORKER_EXECUTOR;
 	}
-	
+
 	// Replace createServerWorkerExecutor
 	private static ExecutorService replWorker(String name) {
 		if (!SmoothBootState.initConfig) {
 			SmoothBoot.regConfig();
 			SmoothBootState.initConfig = true;
 		}
-		
+
 		ExecutorService executorService2 = new ForkJoinPool(MathHelper.clamp(SmoothBoot.config.threadCount.server,
-			1, 0x7fff), (forkJoinPool) -> {
-				String workerName = "Server-Worker-" + name + "-" + field_18034.getAndIncrement();
-				SmoothBoot.LOGGER.debug("Initialized " + workerName);
-				
-				ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, LOGGER);
-				forkJoinWorkerThread.setPriority(SmoothBoot.config.threadPriority.server);
-				forkJoinWorkerThread.setName(workerName);
-				return forkJoinWorkerThread;
+				1, 0x7fff), (forkJoinPool) -> {
+			String workerName = "Server-Worker-" + name + "-" + field_18034.getAndIncrement();
+			SmoothBoot.LOGGER.debug("Initialized " + workerName);
+
+			ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, LOGGER);
+			forkJoinWorkerThread.setPriority(SmoothBoot.config.threadPriority.server);
+			forkJoinWorkerThread.setName(workerName);
+			return forkJoinWorkerThread;
 		}, (thread, throwable) -> {
-            if (throwable instanceof CompletionException) {
-               throwable = throwable.getCause();
-            }
-            
-            if (throwable instanceof CrashException) {
-               Bootstrap.println(((CrashException)throwable).getReport().asString());
-               System.exit(-1);
-            }
-            
-            LOGGER.error(String.format("Caught exception in thread %s", thread), throwable);
-         }, true);
+			if (throwable instanceof CompletionException) {
+				throwable = throwable.getCause();
+			}
+
+			if (throwable instanceof CrashException) {
+				Bootstrap.println(((CrashException)throwable).getReport().asString());
+				System.exit(-1);
+			}
+
+			LOGGER.error(String.format("Caught exception in thread %s", thread), throwable);
+		}, true);
 		return executorService2;
 	}
 }
