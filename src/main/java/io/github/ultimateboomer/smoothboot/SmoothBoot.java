@@ -13,7 +13,7 @@ public class SmoothBoot implements ModInitializer {
 	public static final String MOD_ID = "smoothboot";
 	public static final String NAME = "Smooth Boot";
 	
-	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+	public static final Logger LOGGER = LogManager.getLogger(NAME);
 	
 	public static SmoothBootConfig config;
 	
