@@ -4,19 +4,18 @@ import io.github.ultimateboomer.smoothboot.SmoothBoot;
 
 import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
+import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry.BoundedDiscrete;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry.Gui.PrefixText;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry.Gui.Tooltip;
-import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry.Gui.TransitiveObject;
+import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry.Gui.CollapsibleObject;
 
 @Config(name = SmoothBoot.MOD_ID)
 public class SmoothBootConfig implements ConfigData {
-	@PrefixText
-	@TransitiveObject
+	@CollapsibleObject
 	public ThreadCount threadCount = new ThreadCount();
-	
-	@PrefixText
-	@TransitiveObject
+
+	@CollapsibleObject
 	public ThreadPriority threadPriority = new ThreadPriority();
 	
 	public static class ThreadCount {

@@ -5,5 +5,4 @@ public class SmoothBootState {
 	public static boolean initBootstrap = false;
 	public static boolean initMainWorker = false;
 	public static boolean initIOWorker = false;
-	public static boolean gameLoaded = false;
 }

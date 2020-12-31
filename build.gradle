@@ -80,21 +80,6 @@ bintray {
 	}
 }
 
-bintray {
-	user = System.getenv('BINTRAY_USER')
-	key = System.getenv('BINTRAY_KEY')
-	publications = ['mavenJava']
-	pkg {
-		repo = 'maven'
-		name = 'smoothboot-fabric'
-		licenses = ['MIT']
-		vcsUrl = 'https://github.com/UltimateBoomer/mc-smoothboot.git'
-		version {
-			name = project.version
-		}
-	}
-}
-
 // configure the maven publication
 publishing {
 	publications {
