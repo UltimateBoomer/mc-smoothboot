@@ -22,8 +22,6 @@ import net.minecraft.util.math.MathHelper;
 
 @Mixin(Util.class)
 public abstract class UtilMixin {
-	
-	
 	@Shadow
 	private static ExecutorService BOOTSTRAP_EXECUTOR;
 	

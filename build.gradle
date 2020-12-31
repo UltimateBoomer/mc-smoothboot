@@ -6,7 +6,7 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-archivesBaseName = project.archives_base_name
+archivesBaseName = project.mod_id + "-fabric"
 version = project.minecraft_version + "-" + project.mod_version
 group = project.maven_group
 
@@ -74,19 +74,22 @@ publishing {
 				builtBy remapSourcesJar
 			}
 
-			pom {
-				name = "${archives_base_name}"
-				description = "optimize Minecraft threaded performance"
-			}
+			groupId = project.maven_group
+			artifactId = project.archivesBaseName
+			version = project.version
 		}
 	}
 
 	// select the repositories you want to publish to
 	repositories {
-		// uncomment to publish to the local maven
-		// mavenLocal()
+		//mavenLocal()
+		def ENV = System.getenv()
 		maven {
-
+			url = ENV.MAVEN_URL
+			credentials {
+				username ENV.MAVEN_USERNAME
+				password ENV.MAVEN_PASSWORD
+			}
 		}
 	}
 }
