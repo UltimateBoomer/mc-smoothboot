@@ -7,7 +7,8 @@
   	"UtilMixin"
   ],
   "client": [
-    "client.MainMixin"
+    "client.MainMixin",
+    "client.IntegratedServerMixin"
   ],
   "server": [
   	"server.MainMixin"
