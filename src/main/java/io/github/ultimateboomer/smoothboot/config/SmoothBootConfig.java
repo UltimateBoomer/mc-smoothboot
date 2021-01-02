@@ -1,14 +1,18 @@
 package io.github.ultimateboomer.smoothboot.config;
 
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class SmoothBootConfig {
 	private int bootstrapThreads = 1;
-	private int mainThreads = Runtime.getRuntime().availableProcessors() - 1;
+	private int mainThreads = Math.max(Runtime.getRuntime().availableProcessors() / 2, 1);
+
 	private int gamePriority = 5;
+	private int integratedServerPriority = 5;
 	private int bootstrapPriority = 1;
 	private int mainPriority = 1;
-	private int ioPriority = 5;
+	private int ioPriority = 1;
 	private int modLoadingPriority = 1;
 	
 	/**
@@ -17,7 +21,9 @@ public class SmoothBootConfig {
 	public void validate() {
 		bootstrapThreads = Math.max(bootstrapPriority, 1);
 		mainThreads = Math.max(mainThreads, 1);
+
 		gamePriority = MathHelper.clamp(gamePriority, 1, 10);
+		integratedServerPriority = MathHelper.clamp(integratedServerPriority, 1, 10);
 		bootstrapPriority = MathHelper.clamp(bootstrapPriority, 1, 10);
 		mainPriority = MathHelper.clamp(mainPriority, 1, 10);
 		ioPriority = MathHelper.clamp(ioPriority, 1, 10);
@@ -46,6 +52,14 @@ public class SmoothBootConfig {
 
 	public void setGamePriority(int gamePriority) {
 		this.gamePriority = gamePriority;
+	}
+
+	public int getIntegratedServerPriority() {
+		return integratedServerPriority;
+	}
+
+	public void setIntegratedServerPriority(int integratedServerPriority) {
+		this.integratedServerPriority = integratedServerPriority;
 	}
 
 	public int getBootstrapPriority() {
