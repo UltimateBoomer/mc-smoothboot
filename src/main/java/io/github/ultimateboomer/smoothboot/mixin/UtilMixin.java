@@ -59,7 +59,7 @@ public abstract class UtilMixin {
 			SmoothBoot.LOGGER.debug("Initialized " + workerName);
 			
 			ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, LOGGER);
-			forkJoinWorkerThread.setPriority(config.getServerPriority());
+			forkJoinWorkerThread.setPriority(config.getMainPriority());
 			forkJoinWorkerThread.setName(workerName);
 			return forkJoinWorkerThread;
 		}, (thread, throwable) -> {

@@ -4,9 +4,10 @@ import net.minecraft.util.math.MathHelper;
 
 public class SmoothBootConfig {
 	private int serverThreads = Math.min(Runtime.getRuntime().availableProcessors() - 1, 7);
+
 	private int gamePriority = 5;
-	private int serverPriority = 1;
-	private int ioPriority = 5;
+	private int integratedServerPriority;
+	private int mainPriority = 1;
 	private int modLoadingPriority = 1;
 	
 	/**
@@ -15,8 +16,8 @@ public class SmoothBootConfig {
 	public void validate() {
 		serverThreads = Math.max(serverThreads, 1);
 		gamePriority = MathHelper.clamp(gamePriority, 1, 10);
-		serverPriority = MathHelper.clamp(serverPriority, 1, 10);
-		ioPriority = MathHelper.clamp(ioPriority, 1, 10);
+		integratedServerPriority = MathHelper.clamp(integratedServerPriority, 1, 10);
+		mainPriority = MathHelper.clamp(mainPriority, 1, 10);
 		modLoadingPriority = MathHelper.clamp(modLoadingPriority, 1, 10);
 	}
 
@@ -36,20 +37,20 @@ public class SmoothBootConfig {
 		this.gamePriority = gamePriority;
 	}
 
-	public int getServerPriority() {
-		return serverPriority;
+	public int getIntegratedServerPriority() {
+		return integratedServerPriority;
 	}
 
-	public void setServerPriority(int mainPriority) {
-		this.serverPriority = mainPriority;
+	public void setIntegratedServerPriority(int integratedServerPriority) {
+		this.integratedServerPriority = integratedServerPriority;
 	}
 
-	public int getIoPriority() {
-		return ioPriority;
+	public int getMainPriority() {
+		return mainPriority;
 	}
 
-	public void setIoPriority(int ioPriority) {
-		this.ioPriority = ioPriority;
+	public void setMainPriority(int mainPriority) {
+		this.mainPriority = mainPriority;
 	}
 
 	public int getModLoadingPriority() {

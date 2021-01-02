@@ -8,7 +8,8 @@
 		"ModListMixin"
 	],
 	"client": [
-		"client.MainMixin"
+		"client.MainMixin",
+		"client.MinecraftServerMixin"
 	],
 	"server": [
 		"server.MinecraftServerMixin"
