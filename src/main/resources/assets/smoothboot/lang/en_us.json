@@ -1,13 +1,13 @@
 {
 	"text.autoconfig.smoothboot.title": "Smooth Boot",
 	"text.autoconfig.smoothboot.option.threadCount": "Thread Count",
-	"text.autoconfig.smoothboot.option.threadCount.server": "Server Worker Thread Count",
-	"text.autoconfig.smoothboot.option.threadCount.server.@Tooltip[0]": "This value greatly affect load times.",
-	"text.autoconfig.smoothboot.option.threadCount.server.@Tooltip[1]": "May also affect in-game performance.",
+	"text.autoconfig.smoothboot.option.threadCount.main": "Main Worker Thread Count",
+	"text.autoconfig.smoothboot.option.threadCount.main.@Tooltip[0]": "Can greatly affect load times.",
+	"text.autoconfig.smoothboot.option.threadCount.main.@Tooltip[1]": "May also affect in-game performance.",
 	"text.autoconfig.smoothboot.option.threadPriority": "Thread Priority",
 	"text.autoconfig.smoothboot.option.threadPriority.game": "Game Thread Priority",
-	"text.autoconfig.smoothboot.option.threadPriority.server": "Server Worker Priority",
-	"text.autoconfig.smoothboot.option.threadPriority.io": "IO Worker Priority",
+	"text.autoconfig.smoothboot.option.threadPriority.main": "Main Worker Priority",
+	"text.autoconfig.smoothboot.option.threadPriority.integratedServer": "Integrated Server Thread Priority",
 	"text.autoconfig.smoothboot.option.optimizations": "Optimizations",
 	"text.autoconfig.smoothboot.option.optimizations.dataFixers": "DataFixer Building",
 	"text.autoconfig.smoothboot.option.optimizations.dataFixers.@Tooltip": "Improves loading performance"

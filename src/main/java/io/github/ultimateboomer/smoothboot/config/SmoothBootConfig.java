@@ -20,7 +20,7 @@ public class SmoothBootConfig implements ConfigData {
 	
 	public static class ThreadCount {
 		@Tooltip(count = 2)
-		public int server = Math.max(Runtime.getRuntime().availableProcessors() / 2, 1);
+		public int main = Math.max(Runtime.getRuntime().availableProcessors() / 2, 1);
 	}
 	
 	public static class ThreadPriority {
@@ -28,7 +28,10 @@ public class SmoothBootConfig implements ConfigData {
 		public int game = 5;
 		
 		@BoundedDiscrete(min = 1, max = 10)
-		public int server = 3;
+		public int main = 3;
+
+		@BoundedDiscrete(min = 1, max = 10)
+		public int integratedServer = 5;
 	}
 
 	public static class Optimizations {
