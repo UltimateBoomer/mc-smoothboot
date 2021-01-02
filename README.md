@@ -10,7 +10,7 @@ Improve Minecraft threaded performance.
 ## Effects
 
  - Loading speed is improved.
- - Loading is much smoother, and do not slow down other programs that are running at the same time.\
+ - Loading is much smoother, and do not slow down other programs that are running at the same time.
 
 ## Configuration
 
@@ -22,7 +22,7 @@ Note: the config is slightly different for every Minecraft version, so please re
 
  - Thread count is the # of threads used for each executor.
  - This modifies `parallelism` in `ForkJoinPool`.
- - **Leave Bootstrap Worker Thread Count at 1** as for some reason increasing this actually slows down game loading times. This could be system dependent, so you may want to test it.
+ - **Leave Bootstrap Worker Thread Count at 1** as it doesn't scale well with multithreading. This could be system dependent, so you may want to test it.
  - If Minecraft is using too much CPU, you can lower these values.
  - Conversely, if there's still headroom with the CPU usage, especially if you have a high core count CPU, you can increase Main Worker Thread Count which will improve performance.
 
