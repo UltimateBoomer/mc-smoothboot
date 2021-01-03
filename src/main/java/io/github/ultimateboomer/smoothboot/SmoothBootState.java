@@ -6,9 +6,11 @@ import java.util.concurrent.Executors;
 public class SmoothBootState {
 	public static boolean initConfig = false;
 	public static boolean initServerWorker = false;
-	public static boolean initIOWorker = false;
-	public static boolean gameLoaded = false;
 
-	public static final ExecutorService SINGLE_THREADED_EXECUTOR = Executors.newSingleThreadExecutor();
+	public static final ExecutorService SINGLE_THREADED_EXECUTOR = Executors.newSingleThreadExecutor(r -> {
+		Thread thread = new Thread(r, "1T Executor Thread");
+		thread.setPriority(SmoothBoot.config.threadPriority.main);
+		return null;
+	});
 
 }
