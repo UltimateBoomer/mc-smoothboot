@@ -3,10 +3,10 @@ package io.github.ultimateboomer.smoothboot.config;
 import net.minecraft.util.math.MathHelper;
 
 public class SmoothBootConfig {
-	private int serverThreads = Math.min(Runtime.getRuntime().availableProcessors() - 1, 7);
+	private int mainThreads = Math.max(Runtime.getRuntime().availableProcessors() / 2, 1);
 
 	private int gamePriority = 5;
-	private int integratedServerPriority;
+	private int integratedServerPriority = 5;
 	private int mainPriority = 1;
 	private int modLoadingPriority = 1;
 
@@ -16,7 +16,7 @@ public class SmoothBootConfig {
 	 * Make sure the config values are within range
 	 */
 	public void validate() {
-		serverThreads = Math.max(serverThreads, 1);
+		mainThreads = Math.max(mainThreads, 1);
 
 		gamePriority = MathHelper.clamp(gamePriority, 1, 10);
 		integratedServerPriority = MathHelper.clamp(integratedServerPriority, 1, 10);
@@ -24,12 +24,12 @@ public class SmoothBootConfig {
 		modLoadingPriority = MathHelper.clamp(modLoadingPriority, 1, 10);
 	}
 
-	public int getServerThreads() {
-		return serverThreads;
+	public int getMainThreads() {
+		return mainThreads;
 	}
 
-	public void setServerThreads(int mainThreads) {
-		this.serverThreads = mainThreads;
+	public void setMainThreads(int mainThreads) {
+		this.mainThreads = mainThreads;
 	}
 
 	public int getGamePriority() {

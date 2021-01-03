@@ -53,7 +53,7 @@ public abstract class UtilMixin {
 	private static ExecutorService replWorker(String name) {
 		SmoothBootConfig config = SmoothBootConfigHandler.config;
 		
-		ForkJoinPool executorService2 = new ForkJoinPool(MathHelper.clamp(config.getServerThreads(),
+		ForkJoinPool executorService2 = new ForkJoinPool(MathHelper.clamp(config.getMainThreads(),
 			1, 0x7fff), (forkJoinPool) -> {
 			String workerName = "Server-Worker-" + name + NEXT_SERVER_WORKER_ID.getAndIncrement();
 			SmoothBoot.LOGGER.debug("Initialized " + workerName);
