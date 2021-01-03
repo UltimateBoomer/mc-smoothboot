@@ -8,6 +8,7 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -16,9 +17,9 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = "${mod_version}"
+version = "${minecraft_version}-${mod_version}"
 group = "${mod_group}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "${mod_id}-forge-${minecraft_version}"
+archivesBaseName = "${mod_id}-forge"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -123,9 +124,31 @@ jar {
     }
 }
 
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = "sources"
+    from sourceSets.main.allSource
+}
+
+apply plugin: 'com.jfrog.bintray'
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    publications = ['mavenJava']
+    pkg {
+        repo = 'maven'
+        name = project.archivesBaseName
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/UltimateBoomer/mc-smoothboot.git'
+        version {
+            name = project.version
+        }
+    }
+}
+
 // Example configuration to allow publishing using the maven-publish task
 // This is the preferred method to reobfuscate your jar file
-jar.finalizedBy('reobfJar') 
+jar.finalizedBy('reobfJar')
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 //publish.dependsOn('reobfJar')
 
@@ -133,6 +156,12 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             artifact jar
+
+            artifact sourcesJar
+
+            groupId = project.mod_group
+            artifactId = project.archivesBaseName
+            version = project.version
         }
     }
     repositories {
