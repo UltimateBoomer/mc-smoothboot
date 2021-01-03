@@ -1,8 +1,6 @@
 package io.github.ultimateboomer.smoothboot.config;
 
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class SmoothBootConfig {
 	private int bootstrapThreads = 1;
