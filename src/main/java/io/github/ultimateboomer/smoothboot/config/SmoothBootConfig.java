@@ -9,12 +9,15 @@ public class SmoothBootConfig {
 	private int integratedServerPriority;
 	private int mainPriority = 1;
 	private int modLoadingPriority = 1;
+
+	private boolean optimizeDataFixerBuild = true;
 	
 	/**
 	 * Make sure the config values are within range
 	 */
 	public void validate() {
 		serverThreads = Math.max(serverThreads, 1);
+
 		gamePriority = MathHelper.clamp(gamePriority, 1, 10);
 		integratedServerPriority = MathHelper.clamp(integratedServerPriority, 1, 10);
 		mainPriority = MathHelper.clamp(mainPriority, 1, 10);
@@ -59,5 +62,13 @@ public class SmoothBootConfig {
 
 	public void setModLoadingPriority(int modLoadingPriority) {
 		this.modLoadingPriority = modLoadingPriority;
+	}
+
+	public boolean isOptimizeDataFixerBuild() {
+		return optimizeDataFixerBuild;
+	}
+
+	public void setOptimizeDataFixerBuild(boolean optimizeDataFixerBuild) {
+		this.optimizeDataFixerBuild = optimizeDataFixerBuild;
 	}
 }
