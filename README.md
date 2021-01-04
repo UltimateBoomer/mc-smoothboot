@@ -7,4 +7,4 @@ Improve Minecraft threaded performance.
  - Change the thread priority of each thread.
  - Everything is configurable in the mod config.
 
-For more information, please read the [Smooth Boot Wiki](./wiki).
+For more information, please read the [Smooth Boot Wiki](../../wiki).
