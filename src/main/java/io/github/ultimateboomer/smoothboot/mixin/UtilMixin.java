@@ -1,39 +1,34 @@
 package io.github.ultimateboomer.smoothboot.mixin;
 
-import java.util.Objects;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.ForkJoinWorkerThread;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import io.github.ultimateboomer.smoothboot.SmoothBoot;
 import io.github.ultimateboomer.smoothboot.SmoothBootState;
 import io.github.ultimateboomer.smoothboot.util.LoggingForkJoinWorkerThread;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.MathHelper;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-import net.minecraft.util.Util;
-import net.minecraft.util.math.MathHelper;
+import java.util.Objects;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Mixin(Util.class)
 public abstract class UtilMixin {
 	@Shadow
-	private static ExecutorService BOOTSTRAP_EXECUTOR;
+	private static ExecutorService BOOTSTRAP;
 	
 	@Shadow
-	private static ExecutorService MAIN_WORKER_EXECUTOR;
+	private static ExecutorService SERVER_WORKER_EXECUTOR;
 	
 	@Shadow
-	private static ExecutorService IO_WORKER_EXECUTOR;
+	private static ExecutorService field_24477;
 	
 	@Shadow
 	@Final
-	private static AtomicInteger NEXT_WORKER_ID;
+	private static AtomicInteger NEXT_SERVER_WORKER_ID;
 	
 	@Shadow
 	@Final
@@ -44,34 +39,34 @@ public abstract class UtilMixin {
 	
 	// Probably not ideal, but this is the only way I found to modify createWorker without causing errors.
 	// Redirecting or overwriting causes static initialization to be called too early resulting in NullPointerException being thrown.
-	@Overwrite()
-	public static Executor getBootstrapExecutor() {
+	@Overwrite(remap = false)
+	public static Executor method_28124() {
 		if (!SmoothBootState.initBootstrap) {
-			BOOTSTRAP_EXECUTOR = replWorker("Bootstrap");
+			BOOTSTRAP = replWorker("Bootstrap");
 			SmoothBoot.LOGGER.debug("Bootstrap worker replaced");
 			SmoothBootState.initBootstrap = true;
 		}
-		return BOOTSTRAP_EXECUTOR;
+		return BOOTSTRAP;
 	}
 	
 	@Overwrite()
-	public static Executor getMainWorkerExecutor() {
+	public static Executor getServerWorkerExecutor() {
 		if (!SmoothBootState.initMainWorker) {
-			MAIN_WORKER_EXECUTOR = replWorker("Main");
+			SERVER_WORKER_EXECUTOR = replWorker("Main");
 			SmoothBoot.LOGGER.debug("Main worker replaced");
 			SmoothBootState.initMainWorker = true;
 		}
-		return MAIN_WORKER_EXECUTOR;
+		return SERVER_WORKER_EXECUTOR;
 	}
 	
-	@Overwrite
-	public static Executor getIoWorkerExecutor() {
+	@Overwrite(remap = false)
+	public static Executor method_27958() {
 		if (!SmoothBootState.initIOWorker) {
-			IO_WORKER_EXECUTOR = replIoWorker();
+			field_24477 = replIoWorker();
 			SmoothBoot.LOGGER.debug("IO worker replaced");
 			SmoothBootState.initIOWorker = true;
 		}
-		return IO_WORKER_EXECUTOR;
+		return field_24477;
 	}
 	
 	// Replace createWorker
@@ -83,7 +78,7 @@ public abstract class UtilMixin {
 		
 		ExecutorService executorService2 = new ForkJoinPool(MathHelper.clamp(select(name, SmoothBoot.config.threadCount.bootstrap,
 			SmoothBoot.config.threadCount.main), 1, 0x7fff), (forkJoinPool) -> {
-				String workerName = "Worker-" + name + "-" + NEXT_WORKER_ID.getAndIncrement();
+				String workerName = "Worker-" + name + "-" + NEXT_SERVER_WORKER_ID.getAndIncrement();
 				SmoothBoot.LOGGER.debug("Initialized " + workerName);
 				
 				ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, LOGGER);
@@ -98,7 +93,7 @@ public abstract class UtilMixin {
 	// Replace createIoWorker
 	private static ExecutorService replIoWorker() {
 		return Executors.newCachedThreadPool((runnable) -> {
-			String workerName = "IO-Worker-" + NEXT_WORKER_ID.getAndIncrement();
+			String workerName = "IO-Worker-" + NEXT_SERVER_WORKER_ID.getAndIncrement();
 			SmoothBoot.LOGGER.debug("Initialized " + workerName);
 			
 			Thread thread = new Thread(runnable);
