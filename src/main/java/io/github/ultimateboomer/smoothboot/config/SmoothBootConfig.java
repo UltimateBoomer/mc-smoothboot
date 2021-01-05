@@ -28,7 +28,7 @@ public class SmoothBootConfig implements ConfigData {
 		public int game = 5;
 		
 		@BoundedDiscrete(min = 1, max = 10)
-		public int main = 3;
+		public int main = 1;
 
 		@BoundedDiscrete(min = 1, max = 10)
 		public int integratedServer = 5;
@@ -39,4 +39,3 @@ public class SmoothBootConfig implements ConfigData {
 		public boolean dataFixers = true;
 	}
 }
- 
