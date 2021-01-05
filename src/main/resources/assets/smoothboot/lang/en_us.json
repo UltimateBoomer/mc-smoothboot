@@ -11,5 +11,6 @@
 	"text.autoconfig.smoothboot.option.threadPriority.game": "Game Thread Priority",
 	"text.autoconfig.smoothboot.option.threadPriority.bootstrap": "Bootstrap Worker Priority",
 	"text.autoconfig.smoothboot.option.threadPriority.main": "Main Worker Priority",
-	"text.autoconfig.smoothboot.option.threadPriority.io": "IO Worker Priority"
+	"text.autoconfig.smoothboot.option.threadPriority.io": "IO Worker Priority",
+	"text.autoconfig.smoothboot.option.threadPriority.integratedServer": "Integrated Server Thread Priority"
 }
