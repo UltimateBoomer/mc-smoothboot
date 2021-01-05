@@ -30,13 +30,13 @@ public class SmoothBootConfig implements ConfigData {
 		public int game = 5;
 		
 		@BoundedDiscrete(min = 1, max = 10)
-		public int bootstrap = 3;
+		public int bootstrap = 1;
 		
 		@BoundedDiscrete(min = 1, max = 10)
-		public int main = 3;
+		public int main = 1;
 		
 		@BoundedDiscrete(min = 1, max = 10)
-		public int io = 3;
+		public int io = 1;
 
 		@Environment(EnvType.CLIENT)
 		@BoundedDiscrete(min = 1, max = 10)
