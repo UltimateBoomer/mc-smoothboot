@@ -12,7 +12,7 @@ public class SmoothBootConfig {
 	private int mainPriority = 1;
 	private int ioPriority = 1;
 	private int modLoadingPriority = 1;
-	
+
 	/**
 	 * Make sure the config values are within range
 	 */

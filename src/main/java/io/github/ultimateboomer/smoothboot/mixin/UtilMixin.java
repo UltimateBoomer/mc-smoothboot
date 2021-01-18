@@ -37,18 +37,19 @@ public abstract class UtilMixin {
 
 	@Shadow
 	private static ExecutorService RENDERING_SERVICE;
-	
+
 	@Shadow
 	@Final
 	private static AtomicInteger NEXT_SERVER_WORKER_ID;
-	
+
 	@Shadow
 	@Final
 	private static Logger LOGGER;
-	
+
 	@Shadow
-	private static void printException(Thread thread, Throwable throwable) {};
-	
+	private static void printException(Thread thread, Throwable throwable) {
+	}
+
 	// Probably not ideal, but this is the only way I found to modify createWorker without causing errors.
 	// Redirecting or overwriting causes static initialization to be called too early resulting in NullPointerException being thrown.
 	@Overwrite
@@ -83,12 +84,12 @@ public abstract class UtilMixin {
 
 		return RENDERING_SERVICE;
 	}
-	
+
 	// Replace createNamedService
 	private static ExecutorService replWorker(String name) {
 		SmoothBootConfig config = SmoothBootConfigHandler.config;
 		return new ForkJoinPool(MathHelper.clamp(select(name, config.getBootstrapThreads(),
-			config.getMainThreads()), 1, 0x7fff), (forkJoinPool) -> {
+				config.getMainThreads()), 1, 0x7fff), (forkJoinPool) -> {
 			String workerName = "Worker-" + name + NEXT_SERVER_WORKER_ID.getAndIncrement();
 			SmoothBoot.LOGGER.debug("Initialized " + workerName);
 
@@ -98,12 +99,12 @@ public abstract class UtilMixin {
 			return forkJoinWorkerThread;
 		}, UtilMixin::printException, true);
 	}
-	
+
 	private static ExecutorService replIoWorker() {
 		return Executors.newCachedThreadPool((p_240978_0_) -> {
 			String workerName = "IO-Worker-" + NEXT_SERVER_WORKER_ID.getAndIncrement();
 			SmoothBoot.LOGGER.debug("Initialized " + workerName);
-			
+
 			Thread thread = new Thread(p_240978_0_);
 			thread.setName(workerName);
 			thread.setPriority(SmoothBootConfigHandler.config.getIoPriority());
@@ -111,7 +112,7 @@ public abstract class UtilMixin {
 			return thread;
 		});
 	}
-	
+
 	private static <T> T select(String name, T bootstrap, T main) {
 		return Objects.equal(name, "Bootstrap") ? bootstrap : main;
 	}

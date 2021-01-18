@@ -12,11 +12,11 @@ import io.github.ultimateboomer.smoothboot.SmoothBoot;
 public class SmoothBootConfigHandler {
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 	public static SmoothBootConfig config;
-	
+
 	public static void readConfig() throws IOException {
 		String configPath = System.getProperty("user.dir") + "/config/" + SmoothBoot.MOD_ID + ".json";
 		SmoothBoot.LOGGER.debug("Config path: " + configPath);
-		
+
 		// Read config
 		try (FileReader reader = new FileReader(configPath)) {
 			config = GSON.fromJson(reader, SmoothBootConfig.class);
@@ -27,7 +27,7 @@ public class SmoothBootConfigHandler {
 			try (FileWriter writer = new FileWriter(configPath)) {
 				GSON.toJson(config, writer);
 			}
-			
+
 			SmoothBoot.LOGGER.debug("Config: " + config);
 		} catch (NullPointerException | JsonParseException | IOException e) {
 			// Create new config
