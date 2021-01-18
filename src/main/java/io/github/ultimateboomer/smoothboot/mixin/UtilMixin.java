@@ -1,26 +1,21 @@
 package io.github.ultimateboomer.smoothboot.mixin;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.ForkJoinWorkerThread;
-import java.util.concurrent.atomic.AtomicInteger;
-
+import com.google.common.base.Objects;
+import io.github.ultimateboomer.smoothboot.SmoothBoot;
 import io.github.ultimateboomer.smoothboot.config.SmoothBootConfig;
 import io.github.ultimateboomer.smoothboot.config.SmoothBootConfigHandler;
+import io.github.ultimateboomer.smoothboot.util.LoggingForkJoinWorkerThread;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.MathHelper;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-import com.google.common.base.Objects;
-import io.github.ultimateboomer.smoothboot.SmoothBoot;
-import io.github.ultimateboomer.smoothboot.util.LoggingForkJoinWorkerThread;
-
-import net.minecraft.util.Util;
-import net.minecraft.util.math.MathHelper;
+import java.io.IOException;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Mixin(Util.class)
 public abstract class UtilMixin {
@@ -84,6 +79,14 @@ public abstract class UtilMixin {
 	
 	// Replace createNamedService
 	private static ExecutorService replWorker(String name) {
+		if (SmoothBootConfigHandler.config == null) {
+			try {
+				SmoothBootConfigHandler.readConfig();
+			} catch (IOException e) {
+				throw new IllegalStateException(e);
+			}
+		}
+
 		SmoothBootConfig config = SmoothBootConfigHandler.config;
 		ExecutorService executorService2 = new ForkJoinPool(MathHelper.clamp(select(name, config.getBootstrapThreads(),
 			config.getMainThreads()), 1, 0x7fff), (forkJoinPool) -> {
