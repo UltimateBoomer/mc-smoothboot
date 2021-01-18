@@ -17,12 +17,14 @@ import net.minecraft.server.Main;
 public class MainMixin {
 	@Inject(method = "main", at = @At("HEAD"), remap = false)
 	private static void onMain(CallbackInfo ci) throws IOException {
-		if (!SmoothBootState.initConfig) {
-			SmoothBootConfigHandler.readConfig();
-			SmoothBootState.initConfig = true;
+		if (!SmoothBootState.mcIsRunningDatagen) {
+			if (!SmoothBootState.initConfig) {
+				SmoothBootConfigHandler.readConfig();
+				SmoothBootState.initConfig = true;
+			}
+
+			Thread.currentThread().setPriority(SmoothBootConfigHandler.config.getGamePriority());
+			SmoothBoot.LOGGER.debug("Initialized server game thread");
 		}
-		
-		Thread.currentThread().setPriority(SmoothBootConfigHandler.config.getGamePriority());
-		SmoothBoot.LOGGER.debug("Initialized server game thread");
 	}
 }

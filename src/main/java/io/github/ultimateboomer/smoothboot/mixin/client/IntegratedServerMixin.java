@@ -3,6 +3,7 @@ package io.github.ultimateboomer.smoothboot.mixin.client;
 import com.mojang.authlib.GameProfileRepository;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import io.github.ultimateboomer.smoothboot.SmoothBoot;
+import io.github.ultimateboomer.smoothboot.SmoothBootState;
 import io.github.ultimateboomer.smoothboot.config.SmoothBootConfig;
 import io.github.ultimateboomer.smoothboot.config.SmoothBootConfigHandler;
 import net.minecraft.client.Minecraft;
@@ -28,7 +29,9 @@ public class IntegratedServerMixin {
                        MinecraftSessionService p_i232494_8_, GameProfileRepository p_i232494_9_,
                        PlayerProfileCache p_i232494_10_, IChunkStatusListenerFactory p_i232494_11_,
                        CallbackInfo ci) {
-        p_i232494_1_.setPriority(SmoothBootConfigHandler.config.getIntegratedServerPriority());
-        SmoothBoot.LOGGER.debug("Initialized integrated server thread");
+        if (!SmoothBootState.mcIsRunningDatagen) {
+            p_i232494_1_.setPriority(SmoothBootConfigHandler.config.getIntegratedServerPriority());
+            SmoothBoot.LOGGER.debug("Initialized integrated server thread");
+        }
     }
 }

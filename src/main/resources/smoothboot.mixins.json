@@ -4,12 +4,13 @@
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "smoothboot.refmap.json",
 	"mixins": [
-		"UtilMixin",
-		"ModWorkManagerMixin"
+		"DatagenModLoaderMixin",
+		"ModWorkManagerMixin",
+		"UtilMixin"
 	],
 	"client": [
-		"client.MainMixin",
-		"client.IntegratedServerMixin"
+		"client.IntegratedServerMixin",
+		"client.MainMixin"
 	],
 	"server": [
 		"server.MainMixin"
