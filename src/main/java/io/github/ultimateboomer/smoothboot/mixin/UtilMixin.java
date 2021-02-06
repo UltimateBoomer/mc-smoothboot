@@ -1,24 +1,19 @@
 package io.github.ultimateboomer.smoothboot.mixin;
 
-import java.util.Objects;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.ForkJoinWorkerThread;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import io.github.ultimateboomer.smoothboot.SmoothBoot;
 import io.github.ultimateboomer.smoothboot.SmoothBootState;
 import io.github.ultimateboomer.smoothboot.util.LoggingForkJoinWorkerThread;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.MathHelper;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-import net.minecraft.util.Util;
-import net.minecraft.util.math.MathHelper;
+import java.util.Objects;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Mixin(Util.class)
 public abstract class UtilMixin {
@@ -44,7 +39,12 @@ public abstract class UtilMixin {
 	
 	// Probably not ideal, but this is the only way I found to modify createWorker without causing errors.
 	// Redirecting or overwriting causes static initialization to be called too early resulting in NullPointerException being thrown.
-	@Overwrite()
+
+
+	/**
+	 * @author UltimateBoomer
+	 */
+	@Overwrite
 	public static Executor getBootstrapExecutor() {
 		if (!SmoothBootState.initBootstrap) {
 			BOOTSTRAP_EXECUTOR = replWorker("Bootstrap");
@@ -54,7 +54,10 @@ public abstract class UtilMixin {
 		return BOOTSTRAP_EXECUTOR;
 	}
 	
-	@Overwrite()
+	/**
+	 * @author UltimateBoomer
+	 */
+	@Overwrite
 	public static Executor getMainWorkerExecutor() {
 		if (!SmoothBootState.initMainWorker) {
 			MAIN_WORKER_EXECUTOR = replWorker("Main");
@@ -64,6 +67,9 @@ public abstract class UtilMixin {
 		return MAIN_WORKER_EXECUTOR;
 	}
 	
+	/**
+	 * @author UltimateBoomer
+	 */
 	@Overwrite
 	public static Executor getIoWorkerExecutor() {
 		if (!SmoothBootState.initIOWorker) {
@@ -73,8 +79,10 @@ public abstract class UtilMixin {
 		}
 		return IO_WORKER_EXECUTOR;
 	}
-	
-	// Replace createWorker
+
+	/**
+	 * Replace {@link Util#createWorker}
+	 */
 	private static ExecutorService replWorker(String name) {
 		if (!SmoothBootState.initConfig) {
 			SmoothBoot.regConfig();
@@ -94,8 +102,10 @@ public abstract class UtilMixin {
 		}, UtilMixin::method_18347, true);
 		return executorService2;
 	}
-	
-	// Replace createIoWorker
+
+	/**
+	 * Replace {@link Util#createIoWorker}
+	 */
 	private static ExecutorService replIoWorker() {
 		return Executors.newCachedThreadPool((runnable) -> {
 			String workerName = "IO-Worker-" + NEXT_WORKER_ID.getAndIncrement();
