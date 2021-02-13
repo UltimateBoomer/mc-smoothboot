@@ -20,9 +20,6 @@
   "entrypoints": {
     "main": [
       "io.github.ultimateboomer.smoothboot.SmoothBoot"
-    ],
-    "modmenu": [
-      "io.github.ultimateboomer.smoothboot.config.SmoothBootModMenu"
     ]
   },
   "mixins": [
@@ -30,9 +27,8 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.7.4",
     "fabric": "*",
-    "minecraft": "1.16.x"
+    "minecraft": "1.17.x"
   },
   "suggests": {
     "flamingo": "*"

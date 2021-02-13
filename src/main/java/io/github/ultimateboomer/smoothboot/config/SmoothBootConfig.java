@@ -1,46 +1,34 @@
 package io.github.ultimateboomer.smoothboot.config;
 
-import io.github.ultimateboomer.smoothboot.SmoothBoot;
-import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
-import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
-import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry.BoundedDiscrete;
-import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry.Gui.CollapsibleObject;
-import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry.Gui.Tooltip;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.minecraft.util.math.MathHelper;
 
-@Config(name = SmoothBoot.MOD_ID)
-public class SmoothBootConfig implements ConfigData {
-	@CollapsibleObject
+public class SmoothBootConfig {
 	public ThreadCount threadCount = new ThreadCount();
 
-	@CollapsibleObject
 	public ThreadPriority threadPriority = new ThreadPriority();
 	
 	public static class ThreadCount {
-		@Tooltip(count = 2)
 		public int bootstrap = 1;
-		
-		@Tooltip(count = 2)
-		public int main = Math.max(Runtime.getRuntime().availableProcessors() / 2, 1);
+		public int main = Math.max(Runtime.getRuntime().availableProcessors() - 1, 1);
 	}
 	
 	public static class ThreadPriority {
-		@BoundedDiscrete(min = 1, max = 10)
 		public int game = 5;
-		
-		@BoundedDiscrete(min = 1, max = 10)
 		public int bootstrap = 1;
-		
-		@BoundedDiscrete(min = 1, max = 10)
 		public int main = 1;
-		
-		@BoundedDiscrete(min = 1, max = 10)
 		public int io = 1;
-
-		@Environment(EnvType.CLIENT)
-		@BoundedDiscrete(min = 1, max = 10)
 		public int integratedServer = 5;
+	}
+
+	public void validate() {
+		threadCount.bootstrap = Math.max(threadCount.bootstrap, 1);
+		threadCount.main = Math.max(threadCount.main, 1);
+
+		threadPriority.game = MathHelper.clamp(threadPriority.game, 1, 10);
+		threadPriority.integratedServer = MathHelper.clamp(threadPriority.integratedServer, 1, 10);
+		threadPriority.bootstrap = MathHelper.clamp(threadPriority.bootstrap, 1, 10);
+		threadPriority.main = MathHelper.clamp(threadPriority.main, 1, 10);
+		threadPriority.io = MathHelper.clamp(threadPriority.io, 1, 10);
 	}
 }
  
