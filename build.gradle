@@ -1,7 +1,6 @@
 plugins {
 	id 'fabric-loom' version '0.5-SNAPSHOT'
 	id 'maven-publish'
-	id "com.jfrog.bintray" version "1.8.5"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -61,23 +60,6 @@ jar {
 task sourcesJar(type: Jar, dependsOn: classes) {
 	classifier = "sources"
 	from sourceSets.main.allSource
-}
-
-bintray {
-	user = System.getenv('BINTRAY_USER')
-	key = System.getenv('BINTRAY_KEY')
-	publications = ['mavenJava']
-	//override = true
-	pkg {
-		repo = 'maven'
-		name = archivesBaseName
-		desc = project.mod_desc
-		licenses = ['MIT']
-		vcsUrl = 'https://github.com/UltimateBoomer/mc-smoothboot.git'
-		version {
-			name = project.version
-		}
-	}
 }
 
 // configure the maven publication
