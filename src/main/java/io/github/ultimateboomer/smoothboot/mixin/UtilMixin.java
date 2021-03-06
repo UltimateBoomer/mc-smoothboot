@@ -67,19 +67,18 @@ public abstract class UtilMixin {
 			SmoothBoot.regConfig();
 			SmoothBootState.initConfig = true;
 		}
-		
-		ExecutorService executorService2 = new ForkJoinPool(MathHelper.clamp(select(name, SmoothBoot.config.threadCount.bootstrap,
+
+		return new ForkJoinPool(MathHelper.clamp(select(name, SmoothBoot.config.threadCount.bootstrap,
 			SmoothBoot.config.threadCount.main), 1, 0x7fff), (forkJoinPool) -> {
 				String workerName = "Worker-" + name + "-" + NEXT_WORKER_ID.getAndIncrement();
 				SmoothBoot.LOGGER.debug("Initialized " + workerName);
-				
+
 				ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, LOGGER);
 				forkJoinWorkerThread.setPriority(select(name, SmoothBoot.config.threadPriority.bootstrap,
 					SmoothBoot.config.threadPriority.main));
 				forkJoinWorkerThread.setName(workerName);
 				return forkJoinWorkerThread;
 		}, UtilMixin::method_18347, true);
-		return executorService2;
 	}
 
 	/**
