@@ -10,6 +10,11 @@ archivesBaseName = "${project.mod_id}-fabric"
 version = "${project.minecraft_version}-${project.mod_version}"
 group = project.maven_group
 
+repositories {
+	maven { url "https://maven.shedaniel.me/" }
+	maven { url "https://maven.terraformersmc.com" }
+}
+
 dependencies {
 	//to change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -21,13 +26,10 @@ dependencies {
 	
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
-	modImplementation "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
-	include "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
+	modImplementation "me.shedaniel.cloth:cloth-config:${project.cloth_config_version}"
+	include "me.shedaniel.cloth:cloth-config:${project.cloth_config_version}"
 	
-	modImplementation "me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}"
-	include "me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}"
-	
-	modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}"
+	modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
 }
 
 processResources {
