@@ -1,9 +1,9 @@
 package io.github.ultimateboomer.smoothboot.config;
 
 import io.github.ultimateboomer.smoothboot.SmoothBoot;
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
+import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
+import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 

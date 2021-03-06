@@ -2,7 +2,7 @@ package io.github.ultimateboomer.smoothboot.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import me.shedaniel.autoconfig.AutoConfig;
+import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
