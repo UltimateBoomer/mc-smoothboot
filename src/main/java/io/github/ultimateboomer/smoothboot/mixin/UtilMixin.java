@@ -8,8 +8,11 @@ import net.minecraft.util.math.MathHelper;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
 import java.util.concurrent.*;
@@ -17,67 +20,43 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Mixin(Util.class)
 public abstract class UtilMixin {
-	@Shadow
-	private static ExecutorService BOOTSTRAP_EXECUTOR;
+	@Shadow @Final @Mutable private static ExecutorService BOOTSTRAP_EXECUTOR;
 	
-	@Shadow
-	private static ExecutorService MAIN_WORKER_EXECUTOR;
+	@Shadow @Final @Mutable private static ExecutorService MAIN_WORKER_EXECUTOR;
 	
-	@Shadow
-	private static ExecutorService IO_WORKER_EXECUTOR;
+	@Shadow @Final @Mutable private static ExecutorService IO_WORKER_EXECUTOR;
 	
-	@Shadow
-	@Final
-	private static AtomicInteger NEXT_WORKER_ID;
+	@Shadow @Final private static AtomicInteger NEXT_WORKER_ID;
 	
-	@Shadow
-	@Final
-	private static Logger LOGGER;
+	@Shadow @Final private static Logger LOGGER;
 	
-	@Shadow
-	protected static void method_18347(Thread thread, Throwable throwable) {};
-	
-	// Probably not ideal, but this is the only way I found to modify createWorker without causing errors.
-	// Redirecting or overwriting causes static initialization to be called too early resulting in NullPointerException being thrown.
+	@Shadow protected static void method_18347(Thread thread, Throwable throwable) {};
 
-
-	/**
-	 * @author UltimateBoomer
-	 */
-	@Overwrite
-	public static Executor getBootstrapExecutor() {
+	@Inject(method = "getBootstrapExecutor", at = @At("HEAD"))
+	private static void onGetBootstrapExecutor(CallbackInfoReturnable<Executor> ci) {
 		if (!SmoothBootState.initBootstrap) {
 			BOOTSTRAP_EXECUTOR = replWorker("Bootstrap");
 			SmoothBoot.LOGGER.debug("Bootstrap worker replaced");
 			SmoothBootState.initBootstrap = true;
 		}
-		return BOOTSTRAP_EXECUTOR;
 	}
-	
-	/**
-	 * @author UltimateBoomer
-	 */
-	@Overwrite
-	public static Executor getMainWorkerExecutor() {
+
+	@Inject(method = "getMainWorkerExecutor", at = @At("HEAD"))
+	private static void onGetMainWorkerExecutor(CallbackInfoReturnable<Executor> ci) {
 		if (!SmoothBootState.initMainWorker) {
 			MAIN_WORKER_EXECUTOR = replWorker("Main");
 			SmoothBoot.LOGGER.debug("Main worker replaced");
 			SmoothBootState.initMainWorker = true;
 		}
-		return MAIN_WORKER_EXECUTOR;
 	}
-	
-	/**
-	 * @author UltimateBoomer
-	 */
-	@Overwrite
-	public static Executor getIoWorkerExecutor() {
+
+	@Inject(method = "getIoWorkerExecutor", at = @At("HEAD"))
+	private static void onGetIoWorkerExecutor(CallbackInfoReturnable<Executor> ci) {
 		if (!SmoothBootState.initIOWorker) {
 			IO_WORKER_EXECUTOR = replIoWorker();
 			SmoothBoot.LOGGER.debug("IO worker replaced");
 			SmoothBootState.initIOWorker = true;
 		}
-		return IO_WORKER_EXECUTOR;
 	}
 
 	/**
