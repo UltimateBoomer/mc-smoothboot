@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Smooth Boot",
-  "description": "Optimize Minecraft's loading process to be smoother on low end systems and scale better on high end systems.\nThe effect may be different depending on the computer.",
+  "description": "Improve Minecraft CPU scheduling.",
   "authors": [
     "UltimateBoomer"
   ],
