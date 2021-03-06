@@ -9,8 +9,9 @@
     "UltimateBoomer"
   ],
   "contact": {
-    "homepage": "https://github.com/UltimateBoomer",
-    "sources": "https://github.com/UltimateBoomer/smoothboot-fabric"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/smooth-boot",
+    "sources": "https://github.com/UltimateBoomer/smoothboot-fabric",
+    "issues": "https://github.com/UltimateBoomer/mc-smoothboot/issues"
   },
 
   "license": "MIT License",
@@ -28,15 +29,11 @@
   "mixins": [
     "smoothboot.mixins.json"
   ],
-
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
     "minecraft": "1.16.x"
   },
-  "suggests": {
-    "flamingo": "*"
-  },    
   "custom": {
     "modupdater": {
       "strategy": "curseforge",
