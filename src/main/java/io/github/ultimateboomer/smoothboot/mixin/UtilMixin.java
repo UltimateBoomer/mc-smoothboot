@@ -1,7 +1,6 @@
 package io.github.ultimateboomer.smoothboot.mixin;
 
 import io.github.ultimateboomer.smoothboot.SmoothBoot;
-import io.github.ultimateboomer.smoothboot.SmoothBootState;
 import io.github.ultimateboomer.smoothboot.util.LoggingForkJoinWorkerThread;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
@@ -34,28 +33,28 @@ public abstract class UtilMixin {
 
 	@Inject(method = "getBootstrapExecutor", at = @At("HEAD"))
 	private static void onGetBootstrapExecutor(CallbackInfoReturnable<Executor> ci) {
-		if (!SmoothBootState.initBootstrap) {
+		if (!SmoothBoot.initBootstrap) {
 			BOOTSTRAP_EXECUTOR = replWorker("Bootstrap");
 			SmoothBoot.LOGGER.debug("Bootstrap worker replaced");
-			SmoothBootState.initBootstrap = true;
+			SmoothBoot.initBootstrap = true;
 		}
 	}
 
 	@Inject(method = "getMainWorkerExecutor", at = @At("HEAD"))
 	private static void onGetMainWorkerExecutor(CallbackInfoReturnable<Executor> ci) {
-		if (!SmoothBootState.initMainWorker) {
+		if (!SmoothBoot.initMainWorker) {
 			MAIN_WORKER_EXECUTOR = replWorker("Main");
 			SmoothBoot.LOGGER.debug("Main worker replaced");
-			SmoothBootState.initMainWorker = true;
+			SmoothBoot.initMainWorker = true;
 		}
 	}
 
 	@Inject(method = "getIoWorkerExecutor", at = @At("HEAD"))
 	private static void onGetIoWorkerExecutor(CallbackInfoReturnable<Executor> ci) {
-		if (!SmoothBootState.initIOWorker) {
+		if (!SmoothBoot.initIOWorker) {
 			IO_WORKER_EXECUTOR = replIoWorker();
 			SmoothBoot.LOGGER.debug("IO worker replaced");
-			SmoothBootState.initIOWorker = true;
+			SmoothBoot.initIOWorker = true;
 		}
 	}
 
@@ -63,9 +62,9 @@ public abstract class UtilMixin {
 	 * Replace {@link Util#createWorker}
 	 */
 	private static ExecutorService replWorker(String name) {
-		if (!SmoothBootState.initConfig) {
+		if (!SmoothBoot.initConfig) {
 			SmoothBoot.regConfig();
-			SmoothBootState.initConfig = true;
+			SmoothBoot.initConfig = true;
 		}
 
 		return new ForkJoinPool(MathHelper.clamp(select(name, SmoothBoot.config.threadCount.bootstrap,

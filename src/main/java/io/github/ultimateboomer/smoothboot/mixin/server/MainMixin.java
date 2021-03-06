@@ -1,7 +1,6 @@
 package io.github.ultimateboomer.smoothboot.mixin.server;
 
 import io.github.ultimateboomer.smoothboot.SmoothBoot;
-import io.github.ultimateboomer.smoothboot.SmoothBootState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -13,9 +12,9 @@ import net.minecraft.server.Main;
 public class MainMixin {
 	@Inject(method = "main", at = @At("HEAD"), remap = false)
 	private static void onMain(CallbackInfo ci) {
-		if (!SmoothBootState.initConfig) {
+		if (!SmoothBoot.initConfig) {
 			SmoothBoot.regConfig();
-			SmoothBootState.initConfig = true;
+			SmoothBoot.initConfig = true;
 		}
 		
 		Thread.currentThread().setPriority(SmoothBoot.config.threadPriority.game);

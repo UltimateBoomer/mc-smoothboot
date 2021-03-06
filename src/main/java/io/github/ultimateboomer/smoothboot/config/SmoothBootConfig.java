@@ -20,7 +20,7 @@ public class SmoothBootConfig implements ConfigData {
 		public int bootstrap = 1;
 
 		@ConfigEntry.Gui.Tooltip(count = 2)
-		public int main = Math.max(Runtime.getRuntime().availableProcessors() / 2, 1);
+		public int main = Math.max(Runtime.getRuntime().availableProcessors() - 2, 1);
 	}
 	
 	public static class ThreadPriority {
