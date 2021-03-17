@@ -1,4 +1,6 @@
 # Smooth Boot
+[![](https://jitpack.io/v/UltimateBoomer/mc-smoothboot.svg)](https://jitpack.io/#UltimateBoomer/mc-smoothboot)
+
 Improve Minecraft threaded performance.
 
 ## Features
