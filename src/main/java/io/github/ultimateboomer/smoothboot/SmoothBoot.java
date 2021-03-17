@@ -1,11 +1,12 @@
 package io.github.ultimateboomer.smoothboot;
 
+import io.github.ultimateboomer.smoothboot.config.ConfigHandler;
 import io.github.ultimateboomer.smoothboot.config.SmoothBootConfig;
-import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
-import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
 
 public class SmoothBoot implements ModInitializer {
 	public static final String MOD_ID = "smoothboot";
@@ -28,8 +29,11 @@ public class SmoothBoot implements ModInitializer {
 	// Called before mod initialization
 	public static void regConfig() {
 		// Init config
-		AutoConfig.register(SmoothBootConfig.class, GsonConfigSerializer::new);
-		config = AutoConfig.getConfigHolder(SmoothBootConfig.class).getConfig();
+		try {
+			config = ConfigHandler.readConfig();
+		} catch (IOException e) {
+			throw new IllegalStateException(e);
+		}
 		
 		LOGGER.info(NAME + " config initialized");
 	}

@@ -10,11 +10,11 @@
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/smooth-boot",
-    "sources": "https://github.com/UltimateBoomer/smoothboot-fabric",
+    "sources": "https://github.com/UltimateBoomer/mc-smoothboot",
     "issues": "https://github.com/UltimateBoomer/mc-smoothboot/issues"
   },
 
-  "license": "MIT License",
+  "license": "MIT",
   "icon": "assets/smoothboot/icon.png",
 
   "environment": "*",
@@ -30,9 +30,7 @@
     "smoothboot.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.7.4",
-    "fabric": "*",
-    "minecraft": "1.16.x"
+    "fabricloader": ">=0.7.4"
   },
   "custom": {
     "modupdater": {
