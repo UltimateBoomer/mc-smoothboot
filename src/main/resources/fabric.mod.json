@@ -28,7 +28,7 @@
 
   "depends": {
     "fabric": "*",
-    "minecraft": "1.17.x"
+    "minecraft": "1.18"
   },
   "suggests": {
     "flamingo": "*"
