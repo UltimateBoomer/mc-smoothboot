@@ -34,6 +34,8 @@ public class ConfigHandler {
         } catch (NullPointerException | JsonParseException | IOException e) {
             // Create new config
             config = new SmoothBootConfig();
+            File file = new File(configPath);
+            file.getParentFile().mkdirs();
             try (FileWriter writer = new FileWriter(configPath)) {
                 GSON.toJson(config, writer);
                 SmoothBoot.LOGGER.debug("New config file created");

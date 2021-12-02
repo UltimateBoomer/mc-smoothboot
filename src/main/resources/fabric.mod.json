@@ -30,7 +30,10 @@
     "smoothboot.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.7.4"
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "*",
+    "java": ">=17"
   },
   "custom": {
     "modupdater": {

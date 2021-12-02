@@ -19,17 +19,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Mixin(Util.class)
 public abstract class UtilMixin {
-	@Shadow @Final @Mutable private static ExecutorService BOOTSTRAP_EXECUTOR;
+	@Shadow @Final @Mutable
+	private static ExecutorService BOOTSTRAP_EXECUTOR;
 	
-	@Shadow @Final @Mutable private static ExecutorService MAIN_WORKER_EXECUTOR;
+	@Shadow @Final @Mutable
+	private static ExecutorService MAIN_WORKER_EXECUTOR;
 	
-	@Shadow @Final @Mutable private static ExecutorService IO_WORKER_EXECUTOR;
+	@Shadow @Final @Mutable
+	private static ExecutorService IO_WORKER_EXECUTOR;
 	
-	@Shadow @Final private static AtomicInteger NEXT_WORKER_ID;
+	@Shadow @Final
+	private static AtomicInteger NEXT_WORKER_ID;
 	
-	@Shadow @Final private static Logger LOGGER;
+	@Shadow @Final
+	static Logger LOGGER;
 	
-	@Shadow protected static void method_18347(Thread thread, Throwable throwable) {};
+	@Shadow
+	private static void uncaughtExceptionHandler(Thread thread, Throwable throwable) {};
 
 	@Inject(method = "getBootstrapExecutor", at = @At("HEAD"))
 	private static void onGetBootstrapExecutor(CallbackInfoReturnable<Executor> ci) {
@@ -77,7 +83,7 @@ public abstract class UtilMixin {
 					SmoothBoot.config.threadPriority.main));
 				forkJoinWorkerThread.setName(workerName);
 				return forkJoinWorkerThread;
-		}, UtilMixin::method_18347, true);
+		}, UtilMixin::uncaughtExceptionHandler, true);
 	}
 
 	/**
@@ -92,7 +98,7 @@ public abstract class UtilMixin {
 			thread.setName(workerName);
 			thread.setDaemon(true);
 			thread.setPriority(SmoothBoot.config.threadPriority.io);
-			thread.setUncaughtExceptionHandler(UtilMixin::method_18347);
+			thread.setUncaughtExceptionHandler(UtilMixin::uncaughtExceptionHandler);
 			return thread;
 		});
 	}
