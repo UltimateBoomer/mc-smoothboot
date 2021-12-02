@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Smooth Boot",
-  "description": "Improve Minecraft CPU scheduling.",
+  "description": "Improve and tweak Minecraft CPU scheduling.",
   "authors": [
     "UltimateBoomer"
   ],
