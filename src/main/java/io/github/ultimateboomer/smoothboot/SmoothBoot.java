@@ -3,6 +3,7 @@ package io.github.ultimateboomer.smoothboot;
 import io.github.ultimateboomer.smoothboot.config.ConfigHandler;
 import io.github.ultimateboomer.smoothboot.config.SmoothBootConfig;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.util.Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,5 +37,22 @@ public class SmoothBoot implements ModInitializer {
 		}
 		
 		LOGGER.info(NAME + " config initialized");
+	}
+
+	/**
+	 * From {@link Util#getMaxBackgroundThreads}
+	 */
+	public static int getMaxBackgroundThreads() {
+		String string = System.getProperty("max.bg.threads");
+		if (string != null) {
+			try {
+				int i = Integer.parseInt(string);
+				if (i >= 1 && i <= 255) {
+					return i;
+				}
+			}
+			catch (NumberFormatException ignored) {}
+		}
+		return 255;
 	}
 }

@@ -1,5 +1,6 @@
 package io.github.ultimateboomer.smoothboot.config;
 
+import io.github.ultimateboomer.smoothboot.SmoothBoot;
 import net.minecraft.util.math.MathHelper;
 
 public class SmoothBootConfig {
@@ -9,7 +10,8 @@ public class SmoothBootConfig {
 	
 	public static class ThreadCount {
 		public int bootstrap = 1;
-		public int main = Math.max(Runtime.getRuntime().availableProcessors() - 2, 1);
+		public int main = MathHelper.clamp(Runtime.getRuntime().availableProcessors() - 1, 1,
+				SmoothBoot.getMaxBackgroundThreads());
 	}
 	
 	public static class ThreadPriority {
