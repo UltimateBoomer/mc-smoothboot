@@ -31,9 +31,6 @@ public abstract class UtilMixin {
 	@Shadow @Final
 	private static AtomicInteger NEXT_WORKER_ID;
 	
-	@Shadow @Final
-	static Logger LOGGER;
-	
 	@Shadow
 	private static void uncaughtExceptionHandler(Thread thread, Throwable throwable) {};
 
@@ -78,7 +75,7 @@ public abstract class UtilMixin {
 				String workerName = "Worker-" + name + "-" + NEXT_WORKER_ID.getAndIncrement();
 				SmoothBoot.LOGGER.debug("Initialized " + workerName);
 
-				ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, LOGGER);
+				ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, SmoothBoot.LOGGER);
 				forkJoinWorkerThread.setPriority(select(name, SmoothBoot.config.threadPriority.bootstrap,
 					SmoothBoot.config.threadPriority.main));
 				forkJoinWorkerThread.setName(workerName);
