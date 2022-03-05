@@ -32,7 +32,7 @@ public abstract class UtilMixin {
 	private static AtomicInteger NEXT_WORKER_ID;
 	
 	@Shadow
-	private static void uncaughtExceptionHandler(Thread thread, Throwable throwable) {};
+	private static void uncaughtExceptionHandler(Thread thread, Throwable throwable) {}
 
 	@Inject(method = "getBootstrapExecutor", at = @At("HEAD"))
 	private static void onGetBootstrapExecutor(CallbackInfoReturnable<Executor> ci) {
@@ -62,7 +62,7 @@ public abstract class UtilMixin {
 	}
 
 	/**
-	 * Replace {@link Util#createWorker}
+	 * Replace
 	 */
 	private static ExecutorService replWorker(String name) {
 		if (!SmoothBoot.initConfig) {
@@ -84,7 +84,7 @@ public abstract class UtilMixin {
 	}
 
 	/**
-	 * Replace {@link Util#createIoWorker}
+	 * Replace
 	 */
 	private static ExecutorService replIoWorker() {
 		return Executors.newCachedThreadPool((runnable) -> {
