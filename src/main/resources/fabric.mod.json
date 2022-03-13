@@ -6,7 +6,8 @@
   "name": "Smooth Boot",
   "description": "Improve and tweak Minecraft CPU scheduling.",
   "authors": [
-    "UltimateBoomer"
+    "UltimateBoomer",
+    "fantahund"
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/smooth-boot",
