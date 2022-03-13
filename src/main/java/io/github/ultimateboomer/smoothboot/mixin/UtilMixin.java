@@ -31,11 +31,8 @@ public abstract class UtilMixin {
 	@Shadow @Final
 	private static AtomicInteger NEXT_WORKER_ID;
 	
-	@Shadow @Final
-	static Logger LOGGER;
-	
 	@Shadow
-	private static void uncaughtExceptionHandler(Thread thread, Throwable throwable) {};
+	private static void uncaughtExceptionHandler(Thread thread, Throwable throwable) {}
 
 	@Inject(method = "getBootstrapExecutor", at = @At("HEAD"))
 	private static void onGetBootstrapExecutor(CallbackInfoReturnable<Executor> ci) {
@@ -65,7 +62,7 @@ public abstract class UtilMixin {
 	}
 
 	/**
-	 * Replace {@link Util#createWorker}
+	 * Replace
 	 */
 	private static ExecutorService replWorker(String name) {
 		if (!SmoothBoot.initConfig) {
@@ -78,7 +75,7 @@ public abstract class UtilMixin {
 				String workerName = "Worker-" + name + "-" + NEXT_WORKER_ID.getAndIncrement();
 				SmoothBoot.LOGGER.debug("Initialized " + workerName);
 
-				ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, LOGGER);
+				ForkJoinWorkerThread forkJoinWorkerThread = new LoggingForkJoinWorkerThread(forkJoinPool, SmoothBoot.LOGGER);
 				forkJoinWorkerThread.setPriority(select(name, SmoothBoot.config.threadPriority.bootstrap,
 					SmoothBoot.config.threadPriority.main));
 				forkJoinWorkerThread.setName(workerName);
@@ -87,7 +84,7 @@ public abstract class UtilMixin {
 	}
 
 	/**
-	 * Replace {@link Util#createIoWorker}
+	 * Replace
 	 */
 	private static ExecutorService replIoWorker() {
 		return Executors.newCachedThreadPool((runnable) -> {
