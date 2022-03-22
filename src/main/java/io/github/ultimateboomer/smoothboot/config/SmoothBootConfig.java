@@ -7,13 +7,13 @@ public class SmoothBootConfig {
 	public ThreadCount threadCount = new ThreadCount();
 
 	public ThreadPriority threadPriority = new ThreadPriority();
-	
+
 	public static class ThreadCount {
 		public int bootstrap = 1;
-		public int main = MathHelper.clamp(Runtime.getRuntime().availableProcessors() - 1, 1,
+		public int main = MathHelper.clamp(Runtime.getRuntime().availableProcessors() / 2, 1,
 				SmoothBoot.getMaxBackgroundThreads());
 	}
-	
+
 	public static class ThreadPriority {
 		public int game = 5;
 		public int bootstrap = 1;
@@ -33,4 +33,3 @@ public class SmoothBootConfig {
 		threadPriority.io = MathHelper.clamp(threadPriority.io, 1, 10);
 	}
 }
- 
