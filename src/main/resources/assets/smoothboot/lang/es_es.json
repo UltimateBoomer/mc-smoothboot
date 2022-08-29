@@ -1,0 +1,16 @@
+{
+	"text.autoconfig.smoothboot.title": "Arranque suave",
+	"text.autoconfig.smoothboot.option.threadCount": "Cantidad de subprocesos",
+	"text.autoconfig.smoothboot.option.threadCount.bootstrap": "Cantidad de subprocesos de trabajo al arrancar",
+	"text.autoconfig.smoothboot.option.threadCount.bootstrap.@Tooltip[0]": "Nota: Se sabe que el aumento disminuye el rendimiento.",
+	"text.autoconfig.smoothboot.option.threadCount.bootstrap.@Tooltip[1]": "Mejor dejarlo en 1.",
+	"text.autoconfig.smoothboot.option.threadCount.main": "Cantidad de subprocesos de trabajo principal",
+	"text.autoconfig.smoothboot.option.threadCount.main.@Tooltip[0]": "Este valor afecta mucho los tiempos de carga.",
+	"text.autoconfig.smoothboot.option.threadCount.main.@Tooltip[1]": "También puede afectar el rendimiento del juego.",
+	"text.autoconfig.smoothboot.option.threadPriority": "Prioridad de subprocesos",
+	"text.autoconfig.smoothboot.option.threadPriority.game": "Prioridad de subprocesos del juego",
+	"text.autoconfig.smoothboot.option.threadPriority.bootstrap": "Prioridad de trabajo al arrancar",
+	"text.autoconfig.smoothboot.option.threadPriority.main": "Prioridad de trabajo principal",
+	"text.autoconfig.smoothboot.option.threadPriority.io": "Prioridad de trabajo de E/S",
+	"text.autoconfig.smoothboot.option.threadPriority.integratedServer": "Prioridad de subprocesos del servidor integrado"
+}
