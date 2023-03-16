@@ -22,8 +22,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Mixin(Util.class)
 public abstract class UtilMixin {
-	@Shadow @Final @Mutable
-	private static ExecutorService BOOTSTRAP_EXECUTOR;
+	/*@Shadow @Final @Mutable
+	private static ExecutorService BOOTSTRAP_EXECUTOR;*/
 	
 	@Shadow @Final @Mutable
 	private static ExecutorService MAIN_WORKER_EXECUTOR;
@@ -37,14 +37,14 @@ public abstract class UtilMixin {
 	@Shadow
 	private static void uncaughtExceptionHandler(Thread thread, Throwable throwable) {}
 
-	@Inject(method = "getBootstrapExecutor", at = @At("HEAD"))
+	/*@Inject(method = "getBootstrapExecutor", at = @At("HEAD"))
 	private static void onGetBootstrapExecutor(CallbackInfoReturnable<Executor> ci) {
 		if (!SmoothBoot.initBootstrap) {
 			BOOTSTRAP_EXECUTOR = replWorker("Bootstrap");
 			SmoothBoot.LOGGER.debug("Bootstrap worker replaced");
 			SmoothBoot.initBootstrap = true;
 		}
-	}
+	}*/ //FIXME 1.19.4
 
 	@Inject(method = "getMainWorkerExecutor", at = @At("HEAD"))
 	private static void onGetMainWorkerExecutor(CallbackInfoReturnable<Executor> ci) {
